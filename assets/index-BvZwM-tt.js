@@ -134,9 +134,9 @@
     <li>Finnish, English.</li>
   </ul>
   <div class="contact-info">
+    <span><i class="fa-solid fa-house-laptop"></i> Kuopio, Finland</span>
     <a target="_blank" href="https://github.com/thejebo"><i class="fa-brands fa-github"></i> thejebo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
     <a target="_blank" href="https://fi.linkedin.com/in/jere-borgelin-0738b8200"><i class="fa-brands fa-linkedin"></i> Jere Borgelin <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-    <span><i class="fa-solid fa-location-dot"></i> Kuopio, Finland</span>
   </div>
 </aside>
 `;
