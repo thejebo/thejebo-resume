@@ -10,7 +10,7 @@ document.querySelector('#app').innerHTML = `
   </header>
   <section>
     <h3>Summary</h3>
-    <p>Experienced Web Developer with a strong foundation in full-stack development using modern JavaScript frameworks. Skilled in designing and building scalable, maintainable applications. Equally effective working independently or collaboratively within cross-functional teams. Passionate about creating software that simplifies routines and enhances user experiences.</p>
+    <p>Experienced Web Developer with expertise in full-stack development, specializing in modern JavaScript frameworks. Proficient in designing and building scalable, maintainable applications with a focus on clean code and performance. Adaptable and effective, thriving both as an independent contributor and as a collaborative member of cross-functional teams. I'm passionate about creating software that simplifies routines and enhances user experiences.</p>
   </section>
 
   <section>
@@ -94,7 +94,7 @@ document.querySelector('#app').innerHTML = `
   <h4><i class="fa-solid fa-wand-magic-sparkles"></i> Frontend</h4>
   <ul>
     <li>Vue.js, React, jQuery.</li>
-    <li>SaSS, Tailwind, Bootstrap.</li>
+    <li>Sass, Tailwind, Bootstrap.</li>
     <li>~ Lit, ~Stencil.js, ~Storybook.</li>
   </ul>
   <h4><i class="fa-solid fa-microchip"></i> Backend</h4>
@@ -108,7 +108,7 @@ document.querySelector('#app').innerHTML = `
   <h4><i class="fa-solid fa-circle-nodes"></i> Services</h4>
   <ul>
     <li>GitHub, GitLab.</li>
-    <li>~AWS, UpCloud, Vercil.</li>
+    <li>~AWS, UpCloud.</li>
     <li>~DataDog</li>
   </ul>
   <h4><i class="fa-solid fa-wrench"></i> Tools</h4>
