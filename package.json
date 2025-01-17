@@ -2,7 +2,7 @@
   "name": "thejebo-resume",
   "description": "A personal resume website for Jere Borgelin built with Vite.",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
