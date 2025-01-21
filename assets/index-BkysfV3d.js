@@ -4,7 +4,7 @@
     <div class="row">
       <h1>Jere Borgelin</h1>
     </div>
-    <h2>Senior Web Developer</h2>
+    <h2>Senior Software Developer</h2>
   </header>
   <section>
     <h3>Summary</h3>
