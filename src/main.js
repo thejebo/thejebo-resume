@@ -38,6 +38,7 @@ document.querySelector('#app').innerHTML = `
           <h4>Dikaios Oy</h4>
           <div class="date-range">
             <time dateTime="2020-04">April 2020</time>
+            <span class="mobile-separator">-</span>
             <time dateTime="2021-11">November 2021</time>
           </div>
         </div>
@@ -56,6 +57,7 @@ document.querySelector('#app').innerHTML = `
           <h4>Hurja Solutions Oy</h4>
           <div class="date-range">
             <time dateTime="2015-05">May 2015</time>
+            <span class="mobile-separator">-</span>
             <time dateTime="2020-04">April 2020</time>
           </div>
         </div>
@@ -78,6 +80,7 @@ document.querySelector('#app').innerHTML = `
           <h4>Savonia University <br>of Applied Sciences</h4>
           <div class="date-range">
             <time dateTime="2012-09">September 2012</time>
+            <span class="mobile-separator">-</span>
             <time dateTime="2015-05">May 2015</time>
           </div>
         </div>
@@ -91,50 +94,66 @@ document.querySelector('#app').innerHTML = `
 
 <aside>
   <h3>Skillset</h3>
-  <h4><i class="fa-solid fa-wand-magic-sparkles"></i> Frontend</h4>
-  <ul>
-    <li>Vue.js, React, jQuery.</li>
-    <li>Sass, Tailwind, Bootstrap.</li>
-    <li>~ Lit, ~Stencil.js, ~Storybook.</li>
-  </ul>
-  <h4><i class="fa-solid fa-microchip"></i> Backend</h4>
-  <ul>
-    <li>NodeJS, PHP, ~C#.</li>
-    <li>REST, GraphQL.</li>
-    <li>MySQL, ~PostgreSQL.</li>
-    <li>NGINX, Apache.</li>
-    <li>Redis.</li>
-  </ul>
-  <h4><i class="fa-solid fa-circle-nodes"></i> Services</h4>
-  <ul>
-    <li>GitHub, GitLab.</li>
-    <li>~AWS, UpCloud.</li>
-    <li>~DataDog</li>
-  </ul>
-  <h4><i class="fa-solid fa-wrench"></i> Tools</h4>
-  <ul>
-    <li>VS Code, ~Visual Studio.</li>
-    <li>ChatGPT, GitHub Copilot.</li>
-    <li>GitHub Actions.</li>
-    <li>Jira, Trello.</li>
-    <li>Confluence.</li>
-    <li>Slack.</li>
-    <li>LucidChart, Draw.io.</li>
-    <li>Figma.</li>
-  </ul>
-  <h4><i class="fa-solid fa-vial-circle-check"></i> Testing</h4>
-  <ul>
-    <li>Cypress, ~Puppeteer.</li>
-    <li>Jest.</li>
-  </ul>
-  <h4><i class="fa-solid fa-laptop"></i> Operating Systems</h4>
-  <ul>
-    <li>Linux, Windows.</li>
-  </ul>
-  <h4><i class="fa-solid fa-language"></i> Languages</h4>
-  <ul>
-    <li>Finnish, English.</li>
-  </ul>
+  <div class="sets">
+    <div>
+      <h4><i class="fa-solid fa-wand-magic-sparkles"></i> Frontend</h4>
+      <ul>
+        <li>Vue.js, React, jQuery.</li>
+        <li>Sass, Tailwind, Bootstrap.</li>
+        <li>~ Lit, ~Stencil.js, ~Storybook.</li>
+      </ul>
+    </div>
+    <div>
+      <h4><i class="fa-solid fa-microchip"></i> Backend</h4>
+      <ul>
+        <li>NodeJS, PHP, ~C#.</li>
+        <li>REST, GraphQL.</li>
+        <li>MySQL, ~PostgreSQL.</li>
+        <li>NGINX, Apache.</li>
+        <li>Redis.</li>
+      </ul>
+    </div>
+    <div>
+      <h4><i class="fa-solid fa-circle-nodes"></i> Services</h4>
+      <ul>
+        <li>GitHub, GitLab.</li>
+        <li>~AWS, UpCloud.</li>
+        <li>~DataDog</li>
+      </ul>
+    </div>
+    <div>
+      <h4><i class="fa-solid fa-wrench"></i> Tools</h4>
+      <ul>
+        <li>VS Code, ~Visual Studio.</li>
+        <li>ChatGPT, GitHub Copilot.</li>
+        <li>GitHub Actions.</li>
+        <li>Jira, Trello.</li>
+        <li>Confluence.</li>
+        <li>Slack.</li>
+        <li>LucidChart, Draw.io.</li>
+        <li>Figma.</li>
+      </ul>
+    </div>
+    <div>
+      <h4><i class="fa-solid fa-vial-circle-check"></i> Testing</h4>
+      <ul>
+        <li>Cypress, ~Puppeteer.</li>
+        <li>Jest.</li>
+      </ul>
+    </div>
+    <div>
+      <h4><i class="fa-solid fa-laptop"></i> Operating Systems</h4>
+      <ul>
+        <li>Linux, Windows.</li>
+      </ul>
+    </div>
+    <div>
+      <h4><i class="fa-solid fa-language"></i> Languages</h4>
+      <ul>
+        <li>Finnish, English.</li>
+      </ul>
+    </div>
+  </div>
   <div class="contact-info">
     <span><i class="fa-solid fa-house-laptop"></i> Kuopio, Finland</span>
     <a target="_blank" href="https://github.com/thejebo"><i class="fa-brands fa-github"></i> thejebo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
