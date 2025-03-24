@@ -97,6 +97,7 @@
       <h4><i class="fa-solid fa-wand-magic-sparkles"></i> Frontend</h4>
       <ul>
         <li>Vue.js, React, jQuery.</li>
+        <li>TypeScript</li>
         <li>Sass, Tailwind, Bootstrap.</li>
         <li>~ Lit, ~Stencil.js, ~Storybook.</li>
       </ul>
@@ -135,7 +136,7 @@
     <div>
       <h4><i class="fa-solid fa-vial-circle-check"></i> Testing</h4>
       <ul>
-        <li>Cypress, ~Puppeteer.</li>
+        <li>Cypress, Playwright.</li>
         <li>Jest.</li>
       </ul>
     </div>
