@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://thejebo.github.io/thejebo-resume/sitemap.xml
