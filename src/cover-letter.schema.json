@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Private Cover Letter Draft",
+  "type": "object",
+  "required": ["meta", "recipient", "author", "body"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["role", "company"],
+      "properties": {
+        "role": { "type": "string" },
+        "company": { "type": "string" },
+        "sourceUrl": { "type": "string" },
+        "positionId": { "type": "string" },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO date, ex: 2026-05-26"
+        }
+      }
+    },
+    "recipient": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "team": { "type": "string" },
+        "company": { "type": "string" },
+        "location": { "type": "string" }
+      }
+    },
+    "author": {
+      "type": "object",
+      "required": ["name", "title"],
+      "properties": {
+        "name": { "type": "string" },
+        "title": { "type": "string" },
+        "location": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "links": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["label", "url"],
+            "properties": {
+              "label": { "type": "string" },
+              "url": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "opening": { "type": "string" },
+    "body": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "highlights": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "closing": { "type": "string" },
+    "signature": { "type": "string" }
+  }
+}
