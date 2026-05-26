@@ -1,0 +1,26 @@
+// Color palette
+$primary: #24669a;
+$lighter-primary: #407caa;
+$white: #ffffff;
+$darker-white: #f4f4f4;
+$light-grey: #404040;
+$grey: #424242;
+$darker-grey: #444444;
+$dark-grey: #363636;
+$black: #000000;
+
+// Print color profile toggle.
+// true  = match live website colors in PDF (recommended with Background graphics ON)
+// false = flatter, high-contrast print-safe palette
+$print-match-live: true;
+$print-subtitle-text: if($print-match-live, $white, $dark-grey);
+$print-subtitle-bg: if($print-match-live, $primary, transparent);
+$print-sidebar-text: if($print-match-live, $white, $dark-grey);
+$print-sidebar-bg: if($print-match-live, $dark-grey, transparent);
+$print-sidebar-list-color: if($print-match-live, $darker-white, $grey);
+$print-sidebar-heading-color: if($print-match-live, $white, $dark-grey);
+$print-page-margin: 0mm;
+$print-content-inset: 6mm;
+$print-page-height: 297mm;
+$print-main-right-inset: 4mm;
+$aside-divider: 1px solid #2275b5;

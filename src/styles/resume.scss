@@ -1,0 +1,738 @@
+@use "variables" as *;
+
+// Resume/CV specific styles
+#app {
+  width: 100%;
+  height: auto;
+  min-height: 948px;
+  display: flex;
+  max-width: 800px;
+  flex-direction: row;
+  background-color: $darker-white;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.6);
+
+  main {
+    flex: 2.5;
+
+    header {
+      h1 {
+        font-size: 32px;
+        font-weight: 400;
+        padding: 20px 0 8px 20px;
+      }
+
+      .row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        .actions {
+          padding-right: 20px;
+
+          &.language-switch {
+            gap: 6px;
+            display: flex;
+            align-items: center;
+
+            .language-switch-label {
+              font-size: 11px;
+              font-weight: 600;
+              color: $light-grey;
+              text-transform: uppercase;
+              letter-spacing: 0.08em;
+            }
+
+            .language-btn {
+              border: 0;
+              height: 28px;
+              min-width: 40px;
+              font-size: 12px;
+              color: $dark-grey;
+              font-weight: 700;
+              cursor: pointer;
+              border-radius: 5px;
+              padding: 0 10px;
+              background: transparent;
+              border: 1px solid #b5b5b5;
+              transition:
+                background-color 0.2s ease,
+                color 0.2s ease,
+                border-color 0.2s ease;
+
+              &:hover {
+                border-color: $primary;
+              }
+
+              &:focus-visible {
+                outline: 2px solid $primary;
+                outline-offset: 1px;
+              }
+
+              &.is-active {
+                color: $white;
+                border-color: $primary;
+                background-color: $primary;
+              }
+            }
+          }
+        }
+      }
+
+      h2 {
+        color: $white;
+        font-size: 25px;
+        font-weight: 300;
+        padding: 13px 0 13px 30px;
+        background-color: $primary;
+      }
+    }
+  }
+
+  section {
+    font-size: 14px;
+    color: $darker-grey;
+    margin-bottom: 5px;
+    padding: 14px 0 0 20px;
+
+    &.education {
+      padding: 2px 0 20px 20px;
+
+      ol {
+        li {
+          display: block;
+        }
+      }
+      h4 {
+        display: inline-block;
+      }
+      .date-range {
+        height: auto;
+        margin-left: 4px;
+        display: inline-block;
+      }
+    }
+
+    h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #323232;
+      margin-bottom: 14px;
+      border-bottom: 2px solid $lighter-primary;
+    }
+
+    & > p {
+      margin: 0;
+      color: $grey;
+      display: block;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.5;
+      padding: 0 18px 0 5px;
+    }
+
+    ol {
+      margin: 0 0 0 0;
+      padding: 0 0 0 5px;
+      list-style: none;
+      counter-reset: list-counter;
+
+      & > li {
+        padding: 0;
+        display: flex;
+        margin: 0 0 38px 0;
+        position: relative;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        counter-increment: list-counter;
+
+        &:before {
+          left: 0;
+          top: 100%;
+          width: 5px;
+          content: "";
+          height: 25px;
+          position: absolute;
+          border-left: 4px dotted #c2c2c2;
+        }
+
+        ul {
+          margin: 8px 0 0 0;
+          padding: 0 0 0 15px;
+          list-style-type: circle;
+          list-style-position: outside;
+
+          li {
+            font-size: 12px;
+            margin-bottom: 5px;
+            padding: 0 20px 0 0;
+          }
+        }
+
+        h4 {
+          font-size: 16px;
+          font-weight: 700;
+        }
+
+        span {
+          font-size: 14px;
+          color: $light-grey;
+        }
+      }
+
+      & > li:last-child {
+        margin-bottom: 0;
+
+        &::before {
+          display: none;
+        }
+      }
+    }
+
+    .date-range {
+      height: 42px;
+      display: flex;
+      flex-shrink: 0;
+      padding: 5px 0;
+      font-weight: 400;
+      flex-direction: column;
+      justify-content: space-around;
+
+      .mobile-separator {
+        display: none;
+      }
+
+      time {
+        display: block;
+        color: $primary;
+      }
+    }
+
+    .job-description {
+      width: 350px;
+    }
+  }
+
+  aside {
+    flex: 1;
+    color: $white;
+    display: flex;
+    font-size: 12px;
+    padding: 83px 14px 0 14px;
+    flex-direction: column;
+    background-color: $dark-grey;
+
+    h3 {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 400;
+      padding-bottom: 31px;
+    }
+
+    h4 {
+      display: flex;
+      font-size: 16px;
+      font-weight: 300;
+      padding-bottom: 5px;
+      align-items: center;
+      justify-content: flex-start;
+      border-bottom: $aside-divider;
+    }
+
+    .fa-solid,
+    .fa-brands {
+      width: 28px;
+      font-size: 18px;
+      display: inline-block;
+    }
+
+    ul {
+      padding: 0 0 0 16px;
+      margin: 10px 0 16px 0;
+    }
+
+    li {
+      padding: 0;
+      margin: 2px 0;
+    }
+
+    .contact-info {
+      padding-top: 4px;
+      & > * {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+
+      a > i.fa-arrow-up-right-from-square {
+        font-size: 10px;
+        margin-left: 5px;
+      }
+    }
+
+    .contact-section {
+      margin-top: auto;
+      padding-top: 12px;
+      text-align: center;
+
+      h3 {
+        padding: 0 0 5px 0;
+        margin-bottom: 10px;
+        border-bottom: $aside-divider;
+      }
+
+      .contact-info {
+        & > * {
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
+
+// Resume responsive styles
+@media (max-width: 768px) {
+  body {
+    padding: 20px;
+  }
+
+  #app {
+    height: auto;
+    flex-direction: column;
+
+    main {
+      padding-bottom: 30px;
+
+      header {
+        h1 {
+          padding: 16px 0 8px 20px;
+        }
+
+        .row {
+          .actions {
+            padding-right: 10px;
+
+            &.language-switch {
+              gap: 4px;
+
+              .language-switch-label {
+                display: none;
+              }
+
+              .language-btn {
+                min-width: 36px;
+                padding: 0 8px;
+              }
+            }
+          }
+        }
+
+        h2 {
+          padding: 13px 0 13px 26px;
+        }
+      }
+
+      section {
+        padding: 14px 20px;
+
+        &.education {
+          ol {
+            li {
+              width: 100%;
+
+              .date-range {
+                margin-left: 5px;
+              }
+            }
+          }
+        }
+
+        .job-description {
+          width: 100%;
+        }
+
+        ol {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: flex-start;
+          justify-content: space-between;
+
+          & > li {
+            width: 50%;
+            margin-bottom: 10px;
+            flex-direction: column;
+
+            &::before {
+              display: none;
+            }
+
+            &:last-child {
+              margin-top: 10px;
+            }
+
+            h4 {
+              br {
+                display: none;
+              }
+            }
+
+            .details {
+              margin-bottom: 4px;
+
+              .date-range {
+                gap: 20px;
+                padding: 0;
+                height: auto;
+                display: inline-block;
+
+                .mobile-separator {
+                  font-size: 14px;
+                  font-weight: 600;
+                  color: $dark-grey;
+                  display: inline-block;
+                }
+
+                time {
+                  display: inline-block;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    aside {
+      padding-top: 20px;
+
+      h3 {
+        padding-bottom: 20px;
+      }
+
+      .sets {
+        gap: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-evenly;
+
+        div {
+          width: 180px;
+        }
+      }
+      .contact-info {
+        gap: 12px;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .contact-section {
+        margin-top: 8px;
+        padding-top: 10px;
+      }
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    padding: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  #app {
+    main {
+      section {
+        margin-bottom: 0;
+        padding: 14px 14px 2px;
+
+        ol {
+          & > li {
+            width: 100%;
+            padding-bottom: 10px;
+            border-bottom: 2px solid $lighter-primary;
+
+            h4 {
+              margin: 0 0 2px 0;
+            }
+
+            .details {
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+
+              .date-range {
+                margin: 0 0 2px 0;
+              }
+            }
+
+            ul {
+              li {
+                padding-right: 0;
+              }
+            }
+          }
+
+          & > li:last-child {
+            border: unset;
+          }
+        }
+      }
+    }
+
+    aside {
+      padding-bottom: 30px;
+
+      .sets {
+        gap: 10px;
+
+        div {
+          width: 170px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 380px) {
+  #app {
+    main {
+      section {
+        ol {
+          & > li {
+            .details {
+              flex-direction: column;
+            }
+          }
+        }
+      }
+    }
+    aside {
+      .sets {
+        gap: 10px;
+
+        div {
+          width: 100%;
+        }
+      }
+
+      .contact-info {
+        gap: 8px;
+        flex-direction: column;
+      }
+    }
+  }
+}
+
+// Resume print styles
+@media print {
+  #app .language-switch,
+  #app .actions.language-switch,
+  #app .language-switch-label,
+  #app .language-btn {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  @page {
+    size: A4;
+    margin: $print-page-margin;
+  }
+
+  body {
+    padding: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  #app {
+    height: auto;
+    min-height: $print-page-height;
+    max-width: 100%;
+    flex-direction: row;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+
+    main {
+      flex: 2.15;
+      padding-left: $print-content-inset;
+      padding-right: $print-main-right-inset;
+      box-sizing: border-box;
+
+      header {
+        padding-bottom: 6px;
+
+        h1 {
+          padding: 20px 4px 4px 0;
+        }
+
+        h2 {
+          color: $print-subtitle-text;
+          font-size: 22px;
+          font-weight: 400;
+          margin-left: -$print-content-inset;
+          padding: 6px 4px 8px 0;
+          margin-bottom: 15px;
+          padding-left: $print-content-inset;
+          background-color: $print-subtitle-bg;
+        }
+
+        .language-switch {
+          display: none;
+        }
+
+        .actions.language-switch {
+          display: none;
+        }
+      }
+
+      section {
+        padding: 0 0 6px 0;
+
+        &.education {
+          padding-left: 0;
+        }
+
+        & > p {
+          padding: 0 0 0 0;
+          line-height: 1.6;
+        }
+
+        h3 {
+          font-size: 18px;
+          margin-bottom: 8px;
+          border-bottom: 2px solid $lighter-primary;
+        }
+
+        ol {
+          display: block;
+          padding-left: 0;
+
+          & > li {
+            width: 100%;
+            margin: 0 0 8px 0;
+            padding-bottom: 6px;
+            line-height: 1.35;
+            flex-direction: column;
+            border-bottom: 2px solid $lighter-primary;
+
+            h4 {
+              margin: 0 0 2px 0;
+            }
+
+            .details {
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+
+              .date-range {
+                color: $primary;
+                height: auto;
+                padding: 0;
+                margin: 0 0 2px 0;
+
+                time {
+                  color: $primary;
+                }
+              }
+            }
+
+            .job-description {
+              span,
+              li {
+                line-height: 1.4;
+              }
+            }
+          }
+
+          & > li:last-child {
+            border: unset;
+          }
+        }
+
+        &.education {
+          ol {
+            & > li {
+              margin-bottom: 0;
+              padding-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+
+    aside {
+      color: $print-sidebar-text;
+      display: flex;
+      padding: 0 var($print-content-inset + 30px) 0 30px;
+      text-align: right;
+      flex-direction: column;
+      background-color: $print-sidebar-bg;
+
+      h3 {
+        text-align: center;
+        padding: 54px 0 20px 0;
+      }
+
+      h4 {
+        color: $print-sidebar-heading-color;
+        text-align: left;
+        border-bottom: $aside-divider;
+
+        i {
+          margin-right: 0;
+          display: inline-block;
+          padding: 0 0 5px 0;
+        }
+      }
+
+      ul {
+        color: $print-sidebar-list-color;
+        margin-top: 6px;
+        padding-right: 0;
+        margin-bottom: 2px;
+        list-style-type: none;
+      }
+
+      .contact-info {
+        display: block;
+        padding: 0 22px;
+        margin-top: 0;
+
+        span {
+          display: inline-block;
+          text-align: right;
+        }
+
+        a {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+
+      .contact-section {
+        margin-top: 8px;
+        text-align: center;
+        padding: 30px 20px 0;
+
+        h3 {
+          font-size: 16px;
+          text-align: center;
+          padding: 0 0 5px 0;
+          margin-bottom: 18px;
+          border-bottom: $aside-divider;
+        }
+
+        .contact-info {
+          text-align: center;
+
+          span {
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,332 @@
+@use "variables" as *;
+
+// Cover letter message (error states)
+.cover-letter-message {
+  width: 100%;
+  margin: 20px;
+  padding: 28px;
+  max-width: 800px;
+  color: $darker-grey;
+  box-sizing: border-box;
+  background: $darker-white;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.4);
+
+  h1 {
+    color: $dark-grey;
+    margin-bottom: 10px;
+  }
+
+  p {
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  pre {
+    margin-top: 14px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    background: #f0f0f0;
+    padding: 10px;
+  }
+}
+
+// Cover letter page styles
+#app {
+  .cover-letter-page {
+    width: 100%;
+    display: flex;
+    max-width: 800px;
+    min-height: 948px;
+    background-color: $darker-white;
+
+    .cover-letter-main {
+      flex: 2.5;
+      padding: 0;
+
+      .main-header {
+        padding: 20px 30px;
+        background-color: $primary;
+        color: $white;
+
+        h1 {
+          font-size: 28px;
+          font-weight: 600;
+          margin: 0 0 6px 0;
+        }
+
+        h2 {
+          font-size: 16px;
+          font-weight: 300;
+          margin: 0;
+        }
+      }
+
+      .letter-header {
+        margin: 0;
+        padding: 20px 30px 16px;
+        border-bottom: 2px solid $lighter-primary;
+
+        h3 {
+          font-size: 18px;
+          font-weight: 600;
+          color: $dark-grey;
+          margin: 0 0 8px 0;
+
+          .position-id {
+            display: block;
+            font-size: 14px;
+            color: $grey;
+            font-weight: 400;
+          }
+        }
+
+        .company {
+          font-size: 15px;
+          color: $grey;
+          margin: 0 0 8px 0;
+        }
+
+        .job-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 13px;
+          color: $primary;
+          text-decoration: none;
+
+          i {
+            font-size: 11px;
+          }
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .letter-body {
+        padding: 20px 30px 20px;
+        font-size: 13px;
+        color: $grey;
+        line-height: 1.6;
+
+        .letter-section {
+          margin-bottom: 24px;
+
+          &:last-of-type {
+            margin-bottom: 0;
+          }
+        }
+
+        p {
+          margin: 0 0 14px 0;
+        }
+
+        .highlights-section {
+          h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: $dark-grey;
+            margin: 0 0 10px 0;
+          }
+
+          ul {
+            margin: 0;
+            padding-left: 20px;
+
+            li {
+              margin-bottom: 6px;
+            }
+          }
+        }
+
+        .signature {
+          margin-top: 30px;
+
+          .signature-text {
+            font-family: "Brush Script MT", "Lucida Handwriting", cursive;
+            font-size: 24px;
+            font-style: italic;
+            color: $dark-grey;
+            margin: 0;
+            white-space: pre-line;
+          }
+        }
+      }
+    }
+
+    .cover-letter-aside {
+      flex: 1;
+      color: $white;
+      display: flex;
+      font-size: 12px;
+      padding: 61px 16px 20px 16px;
+      flex-direction: column;
+      background-color: $dark-grey;
+
+      .contact-section {
+        padding-top: 16px;
+      }
+
+      .contact-section,
+      .recipient-section,
+      .date-section,
+      .source-section {
+        margin-bottom: 24px;
+
+        h3 {
+          font-size: 14px;
+          font-weight: 500;
+          margin: 0 0 10px 0;
+          padding-bottom: 6px;
+          border-bottom: $aside-divider;
+        }
+
+        .contact-item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 8px;
+          font-size: 12px;
+
+          i {
+            width: 16px;
+            font-size: 14px;
+            color: $primary;
+          }
+
+          span,
+          a {
+            color: $darker-white;
+          }
+
+          a:hover {
+            color: $white;
+            text-decoration: underline;
+          }
+        }
+
+        .recipient-details {
+          p {
+            margin: 0 0 4px 0;
+            font-size: 12px;
+            color: $darker-white;
+          }
+        }
+
+        time {
+          display: block;
+          font-size: 12px;
+          color: $darker-white;
+        }
+      }
+    }
+  }
+}
+
+// Cover letter responsive styles
+@media (max-width: 768px) {
+  #app {
+    .cover-letter-page {
+      flex-direction: column;
+
+      .cover-letter-aside {
+        order: -1;
+      }
+
+      .cover-letter-main {
+        .main-header {
+          padding: 16px 20px;
+        }
+
+        .letter-header {
+          padding: 16px 20px 12px;
+        }
+
+        .letter-body {
+          padding: 0 20px 20px;
+        }
+      }
+    }
+  }
+}
+
+// Cover letter print styles
+@media print {
+  #app {
+    .cover-letter-page {
+      min-height: $print-page-height;
+      box-shadow: none;
+      flex-direction: row-reverse;
+
+      .cover-letter-main {
+        flex: 2.3;
+        padding: 0;
+        box-sizing: border-box;
+
+        .main-header {
+          padding: $print-content-inset 20px $print-content-inset
+            $print-content-inset;
+          background-color: $print-subtitle-bg;
+
+          h1,
+          h2 {
+            color: $print-subtitle-text;
+          }
+        }
+
+        .letter-header {
+          margin: 0;
+          padding: 16px $print-main-right-inset 12px $print-content-inset;
+        }
+
+        .letter-body {
+          padding: 0 $print-main-right-inset 0 $print-content-inset;
+
+          p {
+            margin-bottom: 10px;
+          }
+
+          .highlights {
+            margin: 14px 0;
+
+            ul li {
+              line-height: 1.4;
+              margin-bottom: 4px;
+            }
+          }
+
+          .signature {
+            margin-top: 24px;
+
+            .signature-text {
+              font-size: 22px;
+            }
+          }
+        }
+      }
+
+      .cover-letter-aside {
+        flex: 1;
+        color: $print-sidebar-text;
+        padding: $print-content-inset 16px;
+        background-color: $print-sidebar-bg;
+
+        .contact-section,
+        .recipient-section,
+        .date-section {
+          h3 {
+            color: $print-sidebar-heading-color;
+            border-bottom: $aside-divider;
+          }
+
+          .contact-item span,
+          .recipient-details p,
+          time {
+            color: $print-sidebar-list-color;
+          }
+        }
+      }
+    }
+  }
+}

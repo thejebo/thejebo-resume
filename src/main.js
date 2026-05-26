@@ -132,14 +132,14 @@ function renderResume(locale) {
   <main>
     <header>
       <div class="row">
-        <h1>${copy.header.name}</h1>
+        <h1>${import.meta.env.VITE_AUTHOR_NAME || copy.header.name}</h1>
         <div class="actions language-switch" role="group" aria-label="${copy.header.toggleLabel}">
           <span class="language-switch-label">${copy.header.toggleLabel}</span>
           <button type="button" class="language-btn ${locale === "fi" ? "is-active" : ""}" data-lang="fi" aria-pressed="${locale === "fi"}">FI</button>
           <button type="button" class="language-btn ${locale === "en" ? "is-active" : ""}" data-lang="en" aria-pressed="${locale === "en"}">EN</button>
         </div>
       </div>
-      <h2>${copy.header.role}</h2>
+      <h2>${import.meta.env.VITE_AUTHOR_TITLE || copy.header.role}</h2>
     </header>
     <section>
       <h3>${copy.sections.summaryTitle}</h3>

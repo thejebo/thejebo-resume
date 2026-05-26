@@ -249,7 +249,7 @@ export const resumeTranslations = {
         title: "Tools",
         items: [
           "VS Code, Visual Studio",
-          "GitHub Copilot, ChatGPT",
+          "GitHub Copilot, ChatGPT, CodeRabbit",
           "GitHub Actions",
           "Jira, Trello",
           "Confluence",
