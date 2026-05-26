@@ -1,14 +1,14 @@
-(function(){const a=document.createElement("link").relList;if(a&&a.supports&&a.supports("modulepreload"))return;for(const i of document.querySelectorAll('link[rel="modulepreload"]'))s(i);new MutationObserver(i=>{for(const e of i)if(e.type==="childList")for(const l of e.addedNodes)l.tagName==="LINK"&&l.rel==="modulepreload"&&s(l)}).observe(document,{childList:!0,subtree:!0});function t(i){const e={};return i.integrity&&(e.integrity=i.integrity),i.referrerPolicy&&(e.referrerPolicy=i.referrerPolicy),i.crossOrigin==="use-credentials"?e.credentials="include":i.crossOrigin==="anonymous"?e.credentials="omit":e.credentials="same-origin",e}function s(i){if(i.ep)return;i.ep=!0;const e=t(i);fetch(i.href,e)}})();document.querySelector("#app").innerHTML=`
+(function(){const l=document.createElement("link").relList;if(l&&l.supports&&l.supports("modulepreload"))return;for(const i of document.querySelectorAll('link[rel="modulepreload"]'))s(i);new MutationObserver(i=>{for(const e of i)if(e.type==="childList")for(const a of e.addedNodes)a.tagName==="LINK"&&a.rel==="modulepreload"&&s(a)}).observe(document,{childList:!0,subtree:!0});function t(i){const e={};return i.integrity&&(e.integrity=i.integrity),i.referrerPolicy&&(e.referrerPolicy=i.referrerPolicy),i.crossOrigin==="use-credentials"?e.credentials="include":i.crossOrigin==="anonymous"?e.credentials="omit":e.credentials="same-origin",e}function s(i){if(i.ep)return;i.ep=!0;const e=t(i);fetch(i.href,e)}})();document.querySelector("#app").innerHTML=`
 <main>
   <header>
     <div class="row">
       <h1>Jere Borgelin</h1>
     </div>
-    <h2>Senior Software Developer</h2>
+    <h2>Senior Full-stack Web Developer</h2>
   </header>
   <section>
     <h3>Summary</h3>
-    <p>Experienced Web Developer with expertise in full-stack development, specializing in modern JavaScript frameworks. Proficient in designing and building scalable, maintainable applications with a focus on clean code and performance. Adaptable and effective, thriving both as an independent contributor and as a collaborative member of cross-functional teams. I'm passionate about creating software that simplifies routines and enhances user experiences.</p>
+    <p>Experienced Senior Web Developer with expertise in full-stack development, specializing in modern JavaScript frameworks. Proficient in designing and building scalable, maintainable applications with a focus on clean code and performance. Adaptable and effective, thriving both as an independent contributor and as a collaborative member of cross-functional teams. I'm passionate about creating software that simplifies routines and enhances user experiences.</p>
   </section>
 
   <section>
@@ -16,18 +16,20 @@
     <ol>
       <li>
         <div class="details">
-          <h4>Visma Finland</h4>
+          <h4>Visma Aquila Oy</h4>
           <div class="date-range">
             <time dateTime="2021-11">November 2021</time>
-            <time dateTime="present">&mdash;</time>
+            <time dateTime="2026-06">June 2026</time>
           </div>
         </div>
         <div class="job-description">
           <span>Web Developer -&gt; Senior Web Developer</span>
           <ul>
-            <li>Optimization and Security related tasks.</li>
-            <li>Moved existing architecture to AWS.</li>
-            <li>Within a team, re-created a large-scale E-commerce site.</li>
+            <li>Participation in optimizing DevOps coulture coupled with Agentic Workflows</li>
+            <li>Optimization, Testing and Security related tasks</li>
+            <li>Worked on communication Web App</li>
+            <li>Moved existing architecture to AWS</li>
+            <li>Within a team, re-created a large-scale E-commerce site</li>
           </ul>
         </div>
       </li>
@@ -70,20 +72,18 @@
       </li>
     </ol>
   </section>
-  <section>
+  <section class="education">
     <h3>Education</h3>
     <ol>
       <li>
         <div class="details">
-          <h4>Savonia University <br>of Applied Sciences</h4>
+          <h4>Savonia University of Applied Sciences</h4>
           <div class="date-range">
-            <time dateTime="2012-09">September 2012</time>
-            <span class="mobile-separator">-</span>
-            <time dateTime="2015-05">May 2015</time>
+            <time dateTime="2012-09">September 2012 - May 2015</time>
           </div>
         </div>
         <div class="job-description">
-          <span>Bachelor of Engineering<br>BE, Computer Programming</span>
+          <span>Bachelor of Engineering BE, Computer Programming</span>
         </div>
       </li>
     </ol>
@@ -98,52 +98,52 @@
       <ul>
         <li>Vue.js, React, jQuery.</li>
         <li>TypeScript</li>
-        <li>Sass, Tailwind, Bootstrap.</li>
-        <li>~ Lit, ~Stencil.js, ~Storybook.</li>
+        <li>Sass, Tailwind, Bootstrap</li>
+        <li>Lit, Stencil.js, Storybook</li>
       </ul>
     </div>
     <div>
       <h4><i class="fa-solid fa-microchip"></i> Backend</h4>
       <ul>
-        <li>NodeJS, PHP, ~C#.</li>
-        <li>REST, GraphQL.</li>
-        <li>MySQL, ~PostgreSQL.</li>
-        <li>NGINX, Apache.</li>
-        <li>Redis.</li>
+        <li>NodeJS, PHP, C#</li>
+        <li>REST, GraphQL</li>
+        <li>MySQL, PostgreSQL</li>
+        <li>NGINX, Apache</li>
+        <li>Redis</li>
+        <li>Docker</li>
       </ul>
     </div>
     <div>
       <h4><i class="fa-solid fa-circle-nodes"></i> Services</h4>
       <ul>
-        <li>GitHub, GitLab.</li>
-        <li>~AWS, UpCloud.</li>
+        <li>GitHub, GitLab</li>
+        <li>AWS, UpCloud</li>
         <li>~DataDog</li>
       </ul>
     </div>
     <div>
       <h4><i class="fa-solid fa-wrench"></i> Tools</h4>
       <ul>
-        <li>VS Code, ~Visual Studio.</li>
-        <li>ChatGPT, GitHub Copilot.</li>
-        <li>GitHub Actions.</li>
-        <li>Jira, Trello.</li>
-        <li>Confluence.</li>
-        <li>Slack.</li>
-        <li>LucidChart, Draw.io.</li>
-        <li>Figma.</li>
+        <li>VS Code, Visual Studio</li>
+        <li>GitHub Copilot, ChatGPT</li>
+        <li>GitHub Actions</li>
+        <li>Jira, Trello</li>
+        <li>Confluence</li>
+        <li>Slack</li>
+        <li>LucidChart, Draw.io</li>
+        <li>Figma</li>
       </ul>
     </div>
     <div>
       <h4><i class="fa-solid fa-vial-circle-check"></i> Testing</h4>
       <ul>
-        <li>Cypress, Playwright.</li>
-        <li>Jest.</li>
+        <li>Cypress, Playwright, Jest, k6, JMeter</li>
       </ul>
     </div>
     <div>
       <h4><i class="fa-solid fa-laptop"></i> Operating Systems</h4>
       <ul>
-        <li>Linux, Windows.</li>
+        <li>Windows, Linux</li>
       </ul>
     </div>
     <div>
@@ -154,9 +154,9 @@
     </div>
   </div>
   <div class="contact-info">
-    <span><i class="fa-solid fa-house-laptop"></i> Kuopio, Finland</span>
-    <a target="_blank" href="https://github.com/thejebo"><i class="fa-brands fa-github"></i> thejebo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-    <a target="_blank" href="https://fi.linkedin.com/in/jere-borgelin-0738b8200"><i class="fa-brands fa-linkedin"></i> Jere Borgelin <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+    <span><i class="fa-solid fa-house-laptop"></i> Turku, Finland</span>
+    <a target="_blank" rel="noopener noreferrer" href="https://github.com/thejebo"><i class="fa-brands fa-github"></i> thejebo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+    <a target="_blank" rel="noopener noreferrer" href="https://fi.linkedin.com/in/jere-borgelin-0738b8200"><i class="fa-brands fa-linkedin"></i> Jere Borgelin <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
   </div>
 </aside>
 `;
