@@ -21,7 +21,7 @@ document.querySelector("#app").innerHTML = `
           <h4>Visma Aquila Oy</h4>
           <div class="date-range">
             <time dateTime="2021-11">November 2021</time>
-            <time dateTime="present">June 2026</time>
+            <time dateTime="2026-06">June 2026</time>
           </div>
         </div>
         <div class="job-description">
@@ -157,8 +157,8 @@ document.querySelector("#app").innerHTML = `
   </div>
   <div class="contact-info">
     <span><i class="fa-solid fa-house-laptop"></i> Turku, Finland</span>
-    <a target="_blank" href="https://github.com/thejebo"><i class="fa-brands fa-github"></i> thejebo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-    <a target="_blank" href="https://fi.linkedin.com/in/jere-borgelin-0738b8200"><i class="fa-brands fa-linkedin"></i> Jere Borgelin <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+    <a target="_blank" rel="noopener noreferrer" href="https://github.com/thejebo"><i class="fa-brands fa-github"></i> thejebo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+    <a target="_blank" rel="noopener noreferrer" href="https://fi.linkedin.com/in/jere-borgelin-0738b8200"><i class="fa-brands fa-linkedin"></i> Jere Borgelin <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
   </div>
 </aside>
 `;

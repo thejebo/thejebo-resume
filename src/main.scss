@@ -101,6 +101,7 @@ a {
         display: inline-block;
       }
       .date-range {
+        height: auto;
         display: inline-block;
       }
     }
@@ -343,10 +344,6 @@ a {
 
                 time {
                   display: inline-block;
-
-                  &[datetime="present"] {
-                    display: none;
-                  }
                 }
               }
             }
