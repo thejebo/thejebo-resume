@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
 
 $primary: #ff5720;
-$darker-primary: #ff0000;
+$darker-primary: #ff0000b5;
 $white: #ffffff;
 $darker-white: #f4f4f4;
 $light-grey: #848484;
@@ -102,6 +102,7 @@ a {
       }
       .date-range {
         height: auto;
+        margin-left: 4px;
         display: inline-block;
       }
     }
@@ -249,7 +250,7 @@ a {
 
     .contact-info {
       padding-top: 12px;
-      border-top: 3px solid $darker-primary;
+      border-top: 2px solid $darker-primary;
       & > * {
         display: flex;
         align-items: center;
