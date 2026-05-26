@@ -98,7 +98,7 @@ document.querySelector("#app").innerHTML = `
     <div>
       <h4><i class="fa-solid fa-wand-magic-sparkles"></i> Frontend</h4>
       <ul>
-        <li>Vue.js, React, jQuery.</li>
+        <li>Vue.js, React, jQuery</li>
         <li>TypeScript</li>
         <li>Sass, Tailwind, MUI, Bootstrap</li>
         <li>Lit, Stencil.js, Storybook</li>
@@ -150,11 +150,12 @@ document.querySelector("#app").innerHTML = `
     <div>
       <h4><i class="fa-solid fa-language"></i> Languages</h4>
       <ul>
-        <li>Finnish, English.</li>
+        <li>Finnish, English</li>
       </ul>
     </div>
   </div>
   <div class="contact-info">
+    <h4><i class="fa-solid fa-location-dot"></i> Location</h4>
     <span><i class="fa-solid fa-house-laptop"></i> Turku, Finland</span>
     <a target="_blank" rel="noopener noreferrer" href="https://github.com/thejebo"><i class="fa-brands fa-github"></i> thejebo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
     <a target="_blank" rel="noopener noreferrer" href="www.linkedin.com/in/jere-borgelin-0738b8200"><i class="fa-brands fa-linkedin"></i> Jere Borgelin <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
