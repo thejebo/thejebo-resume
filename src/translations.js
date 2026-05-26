@@ -36,8 +36,8 @@ export const resumeTranslations = {
         role: "Web Developerista Senior Web Developeriksi",
         bullets: [
           "Testasin ja toteutin AI- ja Agentic Workflow -ratkaisuja osaksi DevOps-sykliä.",
-          "Toteutin testauskäytäntöjä web-sovelluksiin.",
-          "Olin mukana kehittämässä ja ylläpitämässä viestintäsovellusta, jota käyttävät koulut ja muut ulkoiset sidosryhmät.",
+          "Määrittelin ja toteutin web-sovelluksiin testauskäytäntöjä, jotka kattoivat yksikkö-, integraatio-, end-to-end- ja kuormitustestauksen.",
+          "Olin mukana kehittämässä ja ylläpitämässä viestintäsovellusta, joka erotettiin vanhasta monoliittisesta järjestelmästä mikroservice-arkkitehtuuriksi ja jota käyttävät koulut sekä muut ulkoiset sidosryhmät.",
           "Johdin sovelluksen arkkitehtuurin kokonaisvaltaista AWS-uudelleenrakennusta uuden alustan toteuttamiseksi.",
           "Osallistuin verkkokauppa-alustan uudelleenrakentamiseen osana monialaista tiimiä.",
         ],
@@ -50,7 +50,7 @@ export const resumeTranslations = {
         toLabel: "Marraskuu 2021",
         role: "System Manager",
         bullets: [
-          "Sähköisen oppimateriaalin ja koulukirjojen hankinta-alustan arkkitehtuuri, ylläpito ja kehitys sekä lisenssivälityksen toteutus.",
+          "Sähköisen oppimateriaalin ja koulukirjojen hankinta-alustan arkkitehtuuri, ylläpito ja kehitys sekä lisenssivälityksen ylläpito.",
           "API-suunnittelu ja toteutus.",
           "Useiden integraatioiden toteutus.",
           "Yhteistyö ulkoisten sidosryhmien kanssa.",
@@ -175,7 +175,7 @@ export const resumeTranslations = {
         bullets: [
           "Tested and implemented AI and Agentic workflows as part of the DevOps cycle.",
           "Implemented testing practices for web applications.",
-          "Contributed to developing and maintaining a communication web application used by schools and other external stakeholders.",
+          "Contributed to developing and maintaining a communication web application that was split from an aging monolithic system into a microservice architecture, used by schools and other external stakeholders.",
           "Led a full AWS rebuild of the application architecture, creating a new platform informed by the previous solution.",
           "Contributed to rebuilding an e-commerce platform as part of a cross-functional team.",
         ],
@@ -188,7 +188,7 @@ export const resumeTranslations = {
         toLabel: "November 2021",
         role: "System Manager",
         bullets: [
-          "Architecture, maintenance, and development of an e-learning materials and school book procurement platform, including a licensing gateway.",
+          "Architecture, maintenance, and development of an e-learning materials and school book procurement platform, including maintenance of the licensing gateway.",
           "API design and implementation.",
           "Various integration implementations.",
           "Collaboration with external stakeholders.",
