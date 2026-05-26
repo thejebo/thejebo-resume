@@ -25,7 +25,7 @@ $print-page-margin: 0mm;
 $print-content-inset: 6mm;
 $print-page-height: 297mm;
 $print-main-right-inset: 4mm;
-$aside-divider: 1px solid $darker-primary;
+$aside-divider: 1px solid #ff5720;
 
 html,
 body {
@@ -648,7 +648,7 @@ a {
 
       h3 {
         text-align: center;
-        padding: 54px 0 24px 0;
+        padding: 54px 0 20px 0;
       }
 
       h4 {
@@ -690,8 +690,8 @@ a {
 
       .contact-section {
         margin-top: 8px;
-        padding-top: 8px;
         text-align: center;
+        padding: 30px 20px 0;
 
         h3 {
           font-size: 16px;
