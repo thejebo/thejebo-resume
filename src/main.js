@@ -1,166 +1,204 @@
 import "./main.scss";
+import {
+  DEFAULT_LOCALE,
+  resumeTranslations,
+  SUPPORTED_LOCALES,
+} from "./translations";
 
-document.querySelector("#app").innerHTML = `
-<main>
-  <header>
-    <div class="row">
-      <h1>Jere Borgelin</h1>
+const LANGUAGE_STORAGE_KEY = "resume-language";
+const appElement = document.querySelector("#app");
+
+function isSupportedLocale(locale) {
+  return SUPPORTED_LOCALES.includes(locale);
+}
+
+function getInitialLocale() {
+  try {
+    const storedLocale = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+    if (storedLocale && isSupportedLocale(storedLocale)) {
+      return storedLocale;
+    }
+  } catch {
+    // localStorage may be unavailable in strict privacy contexts.
+  }
+
+  return DEFAULT_LOCALE;
+}
+
+function persistLocale(locale) {
+  try {
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, locale);
+  } catch {
+    // localStorage may be unavailable in strict privacy contexts.
+  }
+}
+
+function setMetaContent(selector, content) {
+  const metaElement = document.querySelector(selector);
+  if (metaElement) {
+    metaElement.setAttribute("content", content);
+  }
+}
+
+function applyMetadata(locale, copy) {
+  document.documentElement.lang = locale;
+  document.title = copy.meta.title;
+  setMetaContent("meta[name='description']", copy.meta.description);
+  setMetaContent("meta[property='og:title']", copy.meta.ogTitle);
+  setMetaContent("meta[property='og:description']", copy.meta.description);
+  setMetaContent("meta[property='og:locale']", copy.locale);
+  setMetaContent("meta[name='twitter:title']", copy.meta.twitterTitle);
+  setMetaContent("meta[name='twitter:description']", copy.meta.description);
+}
+
+function renderDateRange(item) {
+  if (!item.toDateTime || !item.toLabel) {
+    return `
+      <div class="date-range">
+        <time dateTime="${item.fromDateTime}">${item.fromLabel}</time>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="date-range">
+      <time dateTime="${item.fromDateTime}">${item.fromLabel}</time>
+      <span class="mobile-separator">-</span>
+      <time dateTime="${item.toDateTime}">${item.toLabel}</time>
     </div>
-    <h2>Senior Full-stack Web Developer</h2>
-  </header>
-  <section>
-    <h3>Summary</h3>
-    <p>Experienced Senior Web Developer with expertise in full-stack development, specializing in modern JavaScript frameworks and backend technologies including Node.js, C#, and PHP. Proficient in designing and building scalable, maintainable applications with a focus on clean code, performance, and long-term reliability. Adaptable and effective, thriving both as an independent contributor and as a collaborative member of cross-functional teams. Passionate about creating software that simplifies routines and enhances user experiences.</p>
-  </section>
+  `;
+}
 
-  <section>
-    <h3>Work Experience</h3>
-    <ol>
+function renderWorkExperience(items) {
+  return items
+    .map(
+      (item) => `
       <li>
         <div class="details">
-          <h4>Visma Aquila Oy</h4>
-          <div class="date-range">
-            <time dateTime="2021-11">November 2021</time>
-            <time dateTime="2026-06">June 2026</time>
-          </div>
+          <h4>${item.company}</h4>
+          ${renderDateRange(item)}
         </div>
         <div class="job-description">
-          <span>Web Developer to Senior Web Developer</span>
+          <span>${item.role}</span>
           <ul>
-            <li>Participation in optimizing DevOps practices, coupled with Agentic Workflows</li>
-            <li>Implemented testing practices across different web applications.</li>
-            <li>Developed and maintained a communication web application used by schools and other external stakeholders.</li>
-            <li>Led a full AWS rebuild of the application architecture, creating a new platform informed by the previous solution.</li>
-            <li>Contributed to rebuilding a e-commerce platform as part of a cross-functional team.</li>
+            ${item.bullets.map((bullet) => `<li>${bullet}</li>`).join("")}
           </ul>
         </div>
       </li>
-      <li>
-        <div class="details">
-          <h4>Dikaios Oy</h4>
-          <div class="date-range">
-            <time dateTime="2020-04">April 2020</time>
-            <span class="mobile-separator">-</span>
-            <time dateTime="2021-11">November 2021</time>
-          </div>
-        </div>
-        <div class="job-description">
-          <span>System Manager</span>
-          <ul>
-            <li>Large-scale E-commerce site architecture, maintenance and development.</li>
-            <li>API design & Implementation.</li>
-            <li>Various integration implementations.</li>
-            <li>Collaboration with publishers and municipalities</li>
-          </ul>
-        </div>
-      </li>
-      <li>
-        <div class="details">
-          <h4>Hurja Solutions Oy</h4>
-          <div class="date-range">
-            <time dateTime="2015-05">May 2015</time>
-            <span class="mobile-separator">-</span>
-            <time dateTime="2020-04">April 2020</time>
-          </div>
-        </div>
-        <div class="job-description">
-          <span>From Intern to Web Developer</span>
-          <ul>
-            <li>Collaboration with customers</li>
-            <li>Large scale E-commerce site maintenance and development.</li>
-            <li>Implemented website layouts from design assets into web pages using HTML, CSS, JavaScript and PHP.</li>
-          </ul>
-        </div>
-      </li>
-    </ol>
-  </section>
-  <section class="education">
-    <h3>Education</h3>
-    <ol>
-      <li>
-        <div class="details">
-          <h4>Savonia University of Applied Sciences</h4>
-          <div class="date-range">
-            <time dateTime="2012-09">September 2012 - May 2015</time>
-          </div>
-        </div>
-        <div class="job-description">
-          <span>Bachelor of Engineering BE, Computer Programming</span>
-        </div>
-      </li>
-    </ol>
-  </section>
-</main>
+    `,
+    )
+    .join("");
+}
 
-<aside>
-  <h3>Skillset</h3>
-  <div class="sets">
-    <div>
-      <h4><i class="fa-solid fa-wand-magic-sparkles"></i> Frontend</h4>
-      <ul>
-        <li>Vue.js, React, jQuery</li>
-        <li>TypeScript</li>
-        <li>Sass, Tailwind, MUI, Bootstrap</li>
-        <li>Lit, Stencil.js, Storybook</li>
-      </ul>
+function renderEducation(items) {
+  return items
+    .map(
+      (item) => `
+      <li>
+        <div class="details">
+          <h4>${item.institution}</h4>
+          <div class="date-range">
+            <time dateTime="${item.dateTime}">${item.dateLabel}</time>
+          </div>
+        </div>
+        <div class="job-description">
+          <span>${item.degree}</span>
+        </div>
+      </li>
+    `,
+    )
+    .join("");
+}
+
+function renderSkills(items) {
+  return items
+    .map(
+      (item) => `
+      <div>
+        <h4><i class="${item.icon}"></i> ${item.title}</h4>
+        <ul>
+          ${item.items.map((skill) => `<li>${skill}</li>`).join("")}
+        </ul>
+      </div>
+    `,
+    )
+    .join("");
+}
+
+function renderResume(locale) {
+  const copy = resumeTranslations[locale] || resumeTranslations[DEFAULT_LOCALE];
+
+  appElement.innerHTML = `
+  <main>
+    <header>
+      <div class="row">
+        <h1>${copy.header.name}</h1>
+        <div class="actions language-switch" role="group" aria-label="${copy.header.toggleLabel}">
+          <span class="language-switch-label">${copy.header.toggleLabel}</span>
+          <button type="button" class="language-btn ${locale === "fi" ? "is-active" : ""}" data-lang="fi" aria-pressed="${locale === "fi"}">FI</button>
+          <button type="button" class="language-btn ${locale === "en" ? "is-active" : ""}" data-lang="en" aria-pressed="${locale === "en"}">EN</button>
+        </div>
+      </div>
+      <h2>${copy.header.role}</h2>
+    </header>
+    <section>
+      <h3>${copy.sections.summaryTitle}</h3>
+      <p>${copy.sections.summary}</p>
+    </section>
+
+    <section>
+      <h3>${copy.sections.workExperienceTitle}</h3>
+      <ol>
+        ${renderWorkExperience(copy.workExperience)}
+      </ol>
+    </section>
+    <section class="education">
+      <h3>${copy.sections.educationTitle}</h3>
+      <ol>
+        ${renderEducation(copy.education)}
+      </ol>
+    </section>
+  </main>
+
+  <aside>
+    <h3>${copy.sections.skillsetTitle}</h3>
+    <div class="sets">
+      ${renderSkills(copy.skills)}
     </div>
-    <div>
-      <h4><i class="fa-solid fa-microchip"></i> Backend</h4>
-      <ul>
-        <li>Node.js, PHP, C#</li>
-        <li>REST, GraphQL</li>
-        <li>MySQL, PostgreSQL</li>
-        <li>NGINX, Apache</li>
-        <li>Redis</li>
-        <li>Docker</li>
-      </ul>
+    <div class="contact-section">
+      <h3>${copy.sections.contactTitle}</h3>
+      <div class="contact-info">
+        <span><i class="fa-solid fa-house-laptop"></i> ${copy.contact.location}</span>
+        <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/jere-borgelin-0738b8200"><i class="fa-brands fa-linkedin"></i> ${copy.contact.linkedinLabel} <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        <a target="_blank" rel="noopener noreferrer" href="https://github.com/thejebo"><i class="fa-brands fa-github"></i> ${copy.contact.githubLabel} <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
     </div>
-    <div>
-      <h4><i class="fa-solid fa-circle-nodes"></i> Services</h4>
-      <ul>
-        <li>GitHub, GitLab</li>
-        <li>AWS, UpCloud</li>
-        <li>Datadog</li>
-      </ul>
-    </div>
-    <div>
-      <h4><i class="fa-solid fa-wrench"></i> Tools</h4>
-      <ul>
-        <li>VS Code, Visual Studio</li>
-        <li>GitHub Copilot, ChatGPT</li>
-        <li>GitHub Actions</li>
-        <li>Jira, Trello</li>
-        <li>Confluence</li>
-        <li>Slack</li>
-        <li>LucidChart, Draw.io, Figma</li>
-      </ul>
-    </div>
-    <div>
-      <h4><i class="fa-solid fa-vial-circle-check"></i> Testing</h4>
-      <ul>
-        <li>Cypress, Playwright, Jest, k6, JMeter</li>
-      </ul>
-    </div>
-    <div>
-      <h4><i class="fa-solid fa-laptop"></i> Operating Systems</h4>
-      <ul>
-        <li>Windows, Linux</li>
-      </ul>
-    </div>
-    <div>
-      <h4><i class="fa-solid fa-language"></i> Languages</h4>
-      <ul>
-        <li>Finnish, English</li>
-      </ul>
-    </div>
-  </div>
-  <div class="contact-section">
-    <h3>Contact</h3>
-    <div class="contact-info">
-      <span><i class="fa-solid fa-house-laptop"></i> Turku, Finland</span>
-      <a target="_blank" rel="noopener noreferrer" href="https://github.com/thejebo"><i class="fa-brands fa-github"></i> thejebo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-      <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/jere-borgelin-0738b8200"><i class="fa-brands fa-linkedin"></i> Jere Borgelin <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-    </div>
-  </div>
-</aside>
+  </aside>
 `;
+
+  appElement.querySelectorAll(".language-btn").forEach((button) => {
+    button.addEventListener("click", () => {
+      const nextLocale = button.dataset.lang;
+      if (
+        nextLocale &&
+        nextLocale !== locale &&
+        isSupportedLocale(nextLocale)
+      ) {
+        setLocale(nextLocale);
+      }
+    });
+  });
+
+  applyMetadata(locale, copy);
+}
+
+function setLocale(locale) {
+  if (!isSupportedLocale(locale)) {
+    return;
+  }
+
+  persistLocale(locale);
+  renderResume(locale);
+}
+
+renderResume(getInitialLocale());

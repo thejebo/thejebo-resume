@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .qodo
+
+# Private local cover letter drafts
+public/letters.local/

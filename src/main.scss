@@ -89,6 +89,53 @@ a {
 
         .actions {
           padding-right: 20px;
+
+          &.language-switch {
+            gap: 6px;
+            display: flex;
+            align-items: center;
+
+            .language-switch-label {
+              font-size: 11px;
+              font-weight: 600;
+              color: $light-grey;
+              text-transform: uppercase;
+              letter-spacing: 0.08em;
+            }
+
+            .language-btn {
+              border: 0;
+              height: 28px;
+              min-width: 40px;
+              font-size: 12px;
+              color: $dark-grey;
+              font-weight: 700;
+              cursor: pointer;
+              border-radius: 5px;
+              padding: 0 10px;
+              background: transparent;
+              border: 1px solid #b5b5b5;
+              transition:
+                background-color 0.2s ease,
+                color 0.2s ease,
+                border-color 0.2s ease;
+
+              &:hover {
+                border-color: $primary;
+              }
+
+              &:focus-visible {
+                outline: 2px solid $primary;
+                outline-offset: 1px;
+              }
+
+              &.is-active {
+                color: $white;
+                border-color: $primary;
+                background-color: $primary;
+              }
+            }
+          }
         }
       }
 
@@ -117,12 +164,12 @@ a {
         }
       }
       h4 {
-        display: inline-block;
+        display: block;
       }
       .date-range {
         height: auto;
-        margin-left: 4px;
-        display: inline-block;
+        margin-left: 0;
+        display: block;
       }
     }
 
@@ -321,6 +368,25 @@ a {
           padding: 16px 0 8px 20px;
         }
 
+        .row {
+          .actions {
+            padding-right: 10px;
+
+            &.language-switch {
+              gap: 4px;
+
+              .language-switch-label {
+                display: none;
+              }
+
+              .language-btn {
+                min-width: 36px;
+                padding: 0 8px;
+              }
+            }
+          }
+        }
+
         h2 {
           padding: 13px 0 13px 26px;
         }
@@ -334,8 +400,17 @@ a {
             li {
               width: 100%;
 
-              .date-range {
-                margin-left: 5px;
+              .details {
+                display: flex;
+                justify-content: flex-start;
+                flex-direction: column;
+
+                .date-range {
+                  margin: 0;
+                  height: auto;
+                  padding: 0;
+                  display: block;
+                }
               }
             }
           }
@@ -520,6 +595,14 @@ a {
 }
 
 @media print {
+  #app .language-switch,
+  #app .actions.language-switch,
+  #app .language-switch-label,
+  #app .language-btn {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
   @page {
     size: A4;
     margin: $print-page-margin;
@@ -560,6 +643,14 @@ a {
           margin-bottom: 15px;
           padding-left: $print-content-inset;
           background-color: $print-subtitle-bg;
+        }
+
+        .language-switch {
+          display: none;
+        }
+
+        .actions.language-switch {
+          display: none;
         }
       }
 
@@ -707,6 +798,289 @@ a {
           span {
             text-align: center;
           }
+        }
+      }
+    }
+  }
+}
+
+.cover-letter-message {
+  width: 100%;
+  margin: 20px;
+  max-width: 800px;
+  color: $darker-grey;
+  background: $darker-white;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.4);
+  padding: 28px;
+  box-sizing: border-box;
+
+  h1 {
+    color: $dark-grey;
+    margin-bottom: 10px;
+  }
+
+  p {
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  pre {
+    margin-top: 14px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    background: #f0f0f0;
+    padding: 10px;
+  }
+}
+
+#app {
+  .cover-letter-page {
+    width: 100%;
+    display: flex;
+    max-width: 800px;
+    min-height: 948px;
+    flex-direction: row;
+    background-color: $darker-white;
+
+    .cover-letter-main {
+      flex: 2.5;
+
+      header {
+        h1 {
+          font-size: 32px;
+          font-weight: 400;
+          padding: 20px 0 8px 20px;
+        }
+
+        h2 {
+          color: $white;
+          font-size: 25px;
+          font-weight: 300;
+          padding: 13px 0 13px 30px;
+          background-color: $primary;
+        }
+      }
+
+      section {
+        font-size: 14px;
+        color: $darker-grey;
+        margin-bottom: 0;
+        padding: 14px 20px 0 20px;
+
+        h3 {
+          font-size: 20px;
+          font-weight: 600;
+          color: #323232;
+          margin-bottom: 14px;
+          border-bottom: 2px solid $darker-primary;
+        }
+
+        h4 {
+          margin: 14px 0 8px;
+          font-size: 16px;
+          color: $dark-grey;
+        }
+
+        .meta-row {
+          gap: 8px;
+          display: flex;
+          color: $grey;
+          font-size: 13px;
+          flex-wrap: wrap;
+
+          time {
+            color: $primary;
+            font-weight: 500;
+          }
+        }
+
+        .job-link {
+          margin-top: 8px;
+          display: inline-block;
+          color: $primary;
+          font-weight: 600;
+        }
+
+        p {
+          margin: 0;
+          color: $grey;
+          font-size: 13px;
+          line-height: 1.55;
+        }
+
+        .salutation {
+          margin-top: 8px;
+          font-weight: 600;
+          color: $dark-grey;
+        }
+
+        .letter-body {
+          margin-top: 8px;
+
+          p {
+            margin-bottom: 10px;
+          }
+
+          ul {
+            margin: 8px 0 16px;
+            padding-left: 18px;
+
+            li {
+              font-size: 13px;
+              margin-bottom: 6px;
+            }
+          }
+
+          .signature {
+            color: $dark-grey;
+            font-weight: 600;
+            margin-top: 20px;
+          }
+        }
+      }
+    }
+
+    .cover-letter-aside {
+      flex: 1;
+      color: $white;
+      display: flex;
+      font-size: 12px;
+      padding: 83px 14px 0 14px;
+      flex-direction: column;
+      background-color: $dark-grey;
+
+      h3 {
+        text-align: center;
+        font-size: 20px;
+        font-weight: 400;
+        padding-bottom: 31px;
+      }
+
+      h4 {
+        display: flex;
+        font-size: 16px;
+        font-weight: 300;
+        padding-bottom: 5px;
+        align-items: center;
+        justify-content: flex-start;
+        border-bottom: $aside-divider;
+      }
+
+      .fa-solid {
+        width: 28px;
+        font-size: 16px;
+        display: inline-block;
+      }
+
+      ul {
+        padding: 0 0 0 16px;
+        margin: 10px 0 16px 0;
+      }
+
+      .letter-links {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+        flex-direction: column;
+
+        a {
+          color: $darker-white;
+          text-decoration: underline;
+          text-underline-offset: 2px;
+          word-break: break-word;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  #app {
+    .cover-letter-page {
+      flex-direction: column;
+
+      .cover-letter-main {
+        section {
+          padding: 14px 16px 0;
+        }
+      }
+
+      .cover-letter-aside {
+        padding: 20px 14px 20px;
+
+        h3 {
+          padding-bottom: 20px;
+        }
+      }
+    }
+  }
+}
+
+@media print {
+  #app {
+    .cover-letter-page {
+      min-height: $print-page-height;
+      box-shadow: none;
+      flex-direction: row;
+
+      .cover-letter-main {
+        flex: 2.15;
+        padding-left: $print-content-inset;
+        padding-right: $print-main-right-inset;
+        box-sizing: border-box;
+
+        header {
+          h1 {
+            padding: 20px 4px 4px 0;
+          }
+
+          h2 {
+            color: $print-subtitle-text;
+            font-size: 22px;
+            font-weight: 400;
+            margin-left: -$print-content-inset;
+            padding: 6px 4px 8px $print-content-inset;
+            margin-bottom: 15px;
+            background-color: $print-subtitle-bg;
+          }
+        }
+
+        section {
+          padding: 0 0 8px;
+
+          .letter-body {
+            p {
+              margin-bottom: 7px;
+            }
+
+            ul {
+              margin: 6px 0 10px;
+
+              li {
+                line-height: 1.4;
+              }
+            }
+          }
+        }
+      }
+
+      .cover-letter-aside {
+        color: $print-sidebar-text;
+        padding: 0 20px;
+        background-color: $print-sidebar-bg;
+
+        h3 {
+          padding: 54px 0 20px;
+        }
+
+        h4 {
+          color: $print-sidebar-heading-color;
+          border-bottom: $aside-divider;
+        }
+
+        ul,
+        .letter-links a {
+          color: $print-sidebar-list-color;
         }
       }
     }
