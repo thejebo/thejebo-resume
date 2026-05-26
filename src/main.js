@@ -25,13 +25,13 @@ document.querySelector("#app").innerHTML = `
           </div>
         </div>
         <div class="job-description">
-          <span>Web Developer -&gt; Senior Web Developer</span>
+          <span>Web Developer to Senior Web Developer</span>
           <ul>
             <li>Participation in optimizing DevOps practices, coupled with Agentic Workflows</li>
-            <li>Optimization, Testing and Security related tasks</li>
-            <li>Worked on communication Web App</li>
-            <li>Moved existing architecture to AWS</li>
-            <li>Within a team, re-created a large-scale E-commerce site</li>
+            <li>Implemented testing practices across different web applications.</li>
+            <li>Developed and maintained a communication web application used by schools and other external stakeholders.</li>
+            <li>Led a full AWS rebuild of the application architecture, creating a new platform informed by the previous solution.</li>
+            <li>Contributed to rebuilding a e-commerce platform as part of a cross-functional team.</li>
           </ul>
         </div>
       </li>
@@ -47,7 +47,7 @@ document.querySelector("#app").innerHTML = `
         <div class="job-description">
           <span>System Manager</span>
           <ul>
-            <li>Large scale E-commerce site architecture, maintenance and development.</li>
+            <li>Large-scale E-commerce site architecture, maintenance and development.</li>
             <li>API design & Implementation.</li>
             <li>Various integration implementations.</li>
             <li>Collaboration with publishers and municipalities</li>
@@ -64,7 +64,7 @@ document.querySelector("#app").innerHTML = `
           </div>
         </div>
         <div class="job-description">
-          <span>Intern -&gt; Web Developer</span>
+          <span>From Intern to Web Developer</span>
           <ul>
             <li>Collaboration with customers</li>
             <li>Large scale E-commerce site maintenance and development.</li>
@@ -107,7 +107,7 @@ document.querySelector("#app").innerHTML = `
     <div>
       <h4><i class="fa-solid fa-microchip"></i> Backend</h4>
       <ul>
-        <li>NodeJS, PHP, C#</li>
+        <li>Node.js, PHP, C#</li>
         <li>REST, GraphQL</li>
         <li>MySQL, PostgreSQL</li>
         <li>NGINX, Apache</li>
@@ -120,7 +120,7 @@ document.querySelector("#app").innerHTML = `
       <ul>
         <li>GitHub, GitLab</li>
         <li>AWS, UpCloud</li>
-        <li>DataDog</li>
+        <li>Datadog</li>
       </ul>
     </div>
     <div>
@@ -154,11 +154,13 @@ document.querySelector("#app").innerHTML = `
       </ul>
     </div>
   </div>
-  <div class="contact-info">
-    <h4><i class="fa-solid fa-location-dot"></i> Location</h4>
-    <span><i class="fa-solid fa-house-laptop"></i> Turku, Finland</span>
-    <a target="_blank" rel="noopener noreferrer" href="https://github.com/thejebo"><i class="fa-brands fa-github"></i> thejebo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-    <a target="_blank" rel="noopener noreferrer" href="www.linkedin.com/in/jere-borgelin-0738b8200"><i class="fa-brands fa-linkedin"></i> Jere Borgelin <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+  <div class="contact-section">
+    <h3>Contact</h3>
+    <div class="contact-info">
+      <span><i class="fa-solid fa-house-laptop"></i> Turku, Finland</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://github.com/thejebo"><i class="fa-brands fa-github"></i> thejebo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/jere-borgelin-0738b8200"><i class="fa-brands fa-linkedin"></i> Jere Borgelin <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+    </div>
   </div>
 </aside>
 `;
