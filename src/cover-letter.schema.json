@@ -49,6 +49,7 @@
         }
       }
     },
+    "greeting": { "type": "string" },
     "opening": { "type": "string" },
     "body": {
       "type": "array",

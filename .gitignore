@@ -29,3 +29,4 @@ dist-ssr
 
 # Private local cover letter drafts
 public/letters.local/
+local-resources/

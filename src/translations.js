@@ -35,7 +35,7 @@ export const resumeTranslations = {
         toLabel: "Kesäkuu 2026",
         role: "Web Developerista Senior Web Developeriksi",
         bullets: [
-          "Testasin ja toteutin AI- ja Agentic Workflow -ratkaisuja osaksi DevOps-sykliä.",
+          "Olin mukana testaamassa ja integroimassa erinäisiä AI- ja Agentic Workflow -ratkaisuja osaksi DevOps-sykliä.",
           "Määrittelin ja toteutin web-sovelluksiin testauskäytäntöjä, jotka kattoivat yksikkö-, integraatio-, end-to-end- ja kuormitustestauksen.",
           "Olin mukana kehittämässä ja ylläpitämässä viestintäsovellusta, joka erotettiin vanhasta monoliittisesta järjestelmästä mikroservice-arkkitehtuuriksi ja jota käyttävät koulut sekä muut ulkoiset sidosryhmät.",
           "Johdin sovelluksen arkkitehtuurin kokonaisvaltaista AWS-uudelleenrakennusta uuden alustan toteuttamiseksi.",
@@ -173,7 +173,7 @@ export const resumeTranslations = {
         toLabel: "June 2026",
         role: "Web Developer to Senior Web Developer",
         bullets: [
-          "Tested and implemented AI and Agentic workflows as part of the DevOps cycle.",
+          "Participated in testing and integrating various AI and Agentic Workflow solutions as part of the DevOps cycle.",
           "Implemented testing practices for web applications.",
           "Contributed to developing and maintaining a communication web application that was split from an aging monolithic system into a microservice architecture, used by schools and other external stakeholders.",
           "Led a full AWS rebuild of the application architecture, creating a new platform informed by the previous solution.",
