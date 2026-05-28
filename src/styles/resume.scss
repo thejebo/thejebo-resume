@@ -95,6 +95,10 @@
     margin-bottom: 5px;
     padding: 14px 0 0 20px;
 
+    &:first-of-type {
+      margin-bottom: 10px;
+    }
+
     &.education {
       padding: 2px 0 20px 20px;
 
@@ -291,6 +295,31 @@
   }
 }
 
+// Wider screens only (desktop/tablet landscape)
+@media (min-width: 769px) {
+  #app {
+    aside {
+      .sets {
+        text-align: right;
+
+        > div {
+          padding: 0 0 0 15px;
+        }
+
+        h4 {
+          gap: 8px;
+          justify-content: flex-end;
+        }
+
+        ul {
+          padding-left: 0;
+          list-style-type: none;
+        }
+      }
+    }
+  }
+}
+
 // Resume responsive styles
 @media (max-width: 768px) {
   body {
@@ -337,6 +366,9 @@
         padding: 14px 20px;
 
         &.education {
+          // Override base education padding (more specific selector) so it matches other sections on mobile.
+          padding: 14px 20px;
+
           ol {
             li {
               width: 100%;
@@ -350,6 +382,10 @@
 
         .job-description {
           width: 100%;
+        }
+
+        p {
+          padding: 0 5px;
         }
 
         ol {
@@ -447,6 +483,11 @@
       section {
         margin-bottom: 0;
         padding: 14px 14px 2px;
+
+        &.education {
+          // Ensure education doesn't fall back to base (more specific) padding on very small screens.
+          padding: 14px 14px 2px;
+        }
 
         ol {
           & > li {

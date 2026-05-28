@@ -12,6 +12,10 @@
         "company": { "type": "string" },
         "sourceUrl": { "type": "string" },
         "positionId": { "type": "string" },
+        "roleLabel": {
+          "type": "string",
+          "description": "Optional label shown above the role/title in the letter header (e.g., Tehtävänimike / Target)."
+        },
         "createdAt": {
           "type": "string",
           "description": "ISO date, ex: 2026-05-26"

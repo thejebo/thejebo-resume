@@ -66,6 +66,14 @@
         padding: 20px 30px 16px;
         border-bottom: 2px solid $lighter-primary;
 
+        .role-label {
+          font-size: 11px;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: $grey;
+          margin: 0 0 6px 0;
+        }
+
         h3 {
           font-size: 18px;
           font-weight: 600;
@@ -160,7 +168,7 @@
       color: $white;
       display: flex;
       font-size: 12px;
-      padding: 61px 16px 20px 16px;
+      padding: 57px 16px 20px 16px;
       flex-direction: column;
       background-color: $dark-grey;
 
@@ -175,7 +183,7 @@
         margin-bottom: 24px;
 
         h3 {
-          font-size: 14px;
+          font-size: 16px;
           font-weight: 500;
           margin: 0 0 10px 0;
           padding-bottom: 6px;
@@ -186,12 +194,12 @@
           display: flex;
           align-items: center;
           gap: 10px;
-          margin-bottom: 8px;
-          font-size: 12px;
+          margin-bottom: 10px;
+          font-size: 14px;
 
           i {
             width: 16px;
-            font-size: 14px;
+            font-size: 16px;
             color: $primary;
           }
 
@@ -209,14 +217,14 @@
         .recipient-details {
           p {
             margin: 0 0 4px 0;
-            font-size: 12px;
+            font-size: 14px;
             color: $darker-white;
           }
         }
 
         time {
           display: block;
-          font-size: 12px;
+          font-size: 14px;
           color: $darker-white;
         }
       }
