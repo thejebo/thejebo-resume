@@ -33,6 +33,41 @@ const formatFinnishPhone = (phone) => {
   return `+358 ${sub.slice(0, 1)} ${sub.slice(1)}`;
 };
 
+const toMailtoHref = (email) => {
+  const raw = String(email || "").trim();
+  if (!raw) return "";
+  const safe = raw.replace(/[^a-zA-Z0-9@._+-]/g, "");
+  return safe ? `mailto:${safe}` : "";
+};
+
+const toTelHref = (phone) => {
+  const raw = String(phone || "").trim();
+  if (!raw) return "";
+
+  const normalized = raw.startsWith("+")
+    ? `+${raw.slice(1).replace(/[^\d]/g, "")}`
+    : raw.replace(/[^\d]/g, "");
+
+  return normalized ? `tel:${normalized}` : "";
+};
+
+const renderEmailLink = (email) => {
+  const label = escapeHtml(email);
+  const href = toMailtoHref(email);
+  return href
+    ? `<a class="print-contact-link" href="${escapeHtml(href)}">${label}</a>`
+    : `<span>${label}</span>`;
+};
+
+const renderPhoneLink = (phone) => {
+  const display = formatFinnishPhone(phone);
+  const label = escapeHtml(display);
+  const href = toTelHref(phone);
+  return href
+    ? `<a class="print-contact-link" href="${escapeHtml(href)}">${label}</a>`
+    : `<span>${label}</span>`;
+};
+
 const getInitialLocale = () => {
   try {
     const storedLocale = localStorage.getItem(LANGUAGE_STORAGE_KEY);
@@ -46,30 +81,22 @@ const getInitialLocale = () => {
   return "fi";
 };
 
-const parseReferrersMarkdown = (markdownText = "") => {
-  const lines = String(markdownText)
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter(Boolean);
+const parseReferrersJson = (payload) => {
+  const list = Array.isArray(payload)
+    ? payload
+    : payload && Array.isArray(payload.referrers)
+      ? payload.referrers
+      : [];
 
-  if (!lines.length) {
-    return [];
-  }
-
-  const startIndex = /^referrers$/i.test(lines[0]) ? 1 : 0;
-  const payload = lines.slice(startIndex);
-
-  const referrers = [];
-  for (let i = 0; i + 3 < payload.length; i += 4) {
-    referrers.push({
-      name: payload[i],
-      title: payload[i + 1],
-      email: payload[i + 2],
-      phone: payload[i + 3],
-    });
-  }
-
-  return referrers;
+  return list
+    .filter((item) => item && typeof item === "object")
+    .map((item) => ({
+      name: String(item.name || "").trim(),
+      title: String(item.title || "").trim(),
+      email: String(item.email || "").trim(),
+      phone: String(item.phone || "").trim(),
+    }))
+    .filter((item) => item.name || item.title || item.email || item.phone);
 };
 
 const getReferencesHeading = (locale) =>
@@ -83,7 +110,7 @@ const renderReferrersSection = (referrers, locale) => {
       <main>
         <section class="references" data-private="true">
           <h3>${escapeHtml(heading)}</h3>
-          <p class="references-empty">No local referrers file found.</p>
+          <p class="references-empty">No local referrers file found (local-resources/Referrers.json).</p>
         </section>
       </main>
       <aside></aside>
@@ -97,8 +124,8 @@ const renderReferrersSection = (referrers, locale) => {
         <div class="referrer-name">${escapeHtml(ref.name)}</div>
         <div class="referrer-title">${escapeHtml(ref.title)}</div>
         <div class="referrer-contact">
-          <span>${escapeHtml(ref.email)}</span>
-          <span>${escapeHtml(formatFinnishPhone(ref.phone))}</span>
+          ${renderEmailLink(ref.email)}
+          ${renderPhoneLink(ref.phone)}
         </div>
       </div>
     `,
@@ -136,7 +163,7 @@ const run = async () => {
   document.body.dataset.page = "print";
 
   const locale = getInitialLocale();
-  const referrersUrl = `${BASE_URL}private/referrers`;
+  const referrersUrl = `${BASE_URL}private/referrers.json`;
 
   try {
     const response = await fetch(withNoCacheParam(referrersUrl), {
@@ -148,8 +175,8 @@ const run = async () => {
       return;
     }
 
-    const markdown = await response.text();
-    const referrers = parseReferrersMarkdown(markdown);
+    const json = await response.json();
+    const referrers = parseReferrersJson(json);
     insertReferencesSection(renderReferrersSection(referrers, locale));
   } catch {
     insertReferencesSection(renderReferrersSection([], locale));

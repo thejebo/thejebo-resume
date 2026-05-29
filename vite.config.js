@@ -11,7 +11,9 @@ export default defineConfig(({ command }) => ({
         server.middlewares.use((req, res, next) => {
           const rawUrl = req.url || "";
           const pathOnly = rawUrl.split("?")[0];
-          const querySuffix = rawUrl.includes("?") ? rawUrl.slice(rawUrl.indexOf("?")) : "";
+          const querySuffix = rawUrl.includes("?")
+            ? rawUrl.slice(rawUrl.indexOf("?"))
+            : "";
 
           if (
             pathOnly === "/thejebo-resume/print" ||
@@ -20,8 +22,31 @@ export default defineConfig(({ command }) => ({
             req.url = `/thejebo-resume/print.html${querySuffix}`;
           }
 
+          if (pathOnly === "/thejebo-resume/private/referrers.json") {
+            const filePath = resolve(
+              __dirname,
+              "local-resources",
+              "Referrers.json",
+            );
+
+            if (fs.existsSync(filePath)) {
+              res.statusCode = 200;
+              res.setHeader("Content-Type", "application/json; charset=utf-8");
+              res.end(fs.readFileSync(filePath));
+              return;
+            }
+
+            res.statusCode = 404;
+            res.end("Not found");
+            return;
+          }
+
           if (pathOnly === "/thejebo-resume/private/referrers") {
-            const filePath = resolve(__dirname, "local-resources", "Referrers.md");
+            const filePath = resolve(
+              __dirname,
+              "local-resources",
+              "Referrers.md",
+            );
 
             if (fs.existsSync(filePath)) {
               res.statusCode = 200;

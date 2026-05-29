@@ -111,7 +111,7 @@ export const resumeTranslations = {
         ],
       },
       {
-        icon: "fa-solid fa-circle-nodes",
+        icon: "fa-solid fa-infinity",
         title: "Pilvi & DevOps",
         items: ["GitHub, GitLab", "AWS, UpCloud", "Datadog", "Aikido"],
       },
@@ -258,7 +258,7 @@ export const resumeTranslations = {
         ],
       },
       {
-        icon: "fa-solid fa-circle-nodes",
+        icon: "fa-solid fa-infinity",
         title: "Cloud & DevOps",
         items: ["GitHub, GitLab", "AWS, UpCloud", "Datadog", "Aikido"],
       },
