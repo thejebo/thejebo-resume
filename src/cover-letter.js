@@ -54,9 +54,8 @@ const renderMessage = (title, body, detail = "") => {
 
 const renderCoverLetter = (letter) => {
   const role = letter.meta?.role || "Hakemuskirje";
-  const roleLabel = letter.meta?.roleLabel || "";
+  const roleLabel = letter.meta?.roleLabel || "Tehtävänimike";
   const company = letter.meta?.company || "Yritys";
-  const sourceUrl = letter.meta?.sourceUrl || "";
   const positionId = letter.meta?.positionId || "";
   const recipientName = letter.recipient?.name || "Rekrytointitiimi";
   const recipientTeam = letter.recipient?.team || "";
@@ -100,9 +99,6 @@ const renderCoverLetter = (letter) => {
     .map((point) => `<li>${escapeHtml(point)}</li>`)
     .join("");
 
-  const jobLinkMarkup = sourceUrl
-    ? `<a class="job-link" href="${escapeHtml(sourceUrl)}" target="_blank" rel="noreferrer"><i class="fa-solid fa-arrow-up-right-from-square"></i><span>Työpaikkailmoitus</span></a>`
-    : "";
 
   document.querySelector("#app").innerHTML = `
     <div class="cover-letter-page">
@@ -140,7 +136,6 @@ const renderCoverLetter = (letter) => {
           ${roleLabel ? `<p class="role-label">${escapeHtml(roleLabel)}</p>` : ""}
           <h3>${escapeHtml(role)}${positionId ? ` <small class="position-id">(${escapeHtml(positionId)})</small>` : ""}</h3>
           <p class="company">${escapeHtml(company)}</p>
-          ${jobLinkMarkup}
         </div>
 
         <div class="letter-body">

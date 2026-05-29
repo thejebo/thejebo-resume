@@ -70,7 +70,8 @@
           font-size: 11px;
           letter-spacing: 0.08em;
           text-transform: uppercase;
-          color: $grey;
+          color: #5b5b5b;
+          font-weight: 500;
           margin: 0 0 6px 0;
         }
 
@@ -92,23 +93,6 @@
           font-size: 15px;
           color: $grey;
           margin: 0 0 8px 0;
-        }
-
-        .job-link {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          font-size: 13px;
-          color: $primary;
-          text-decoration: none;
-
-          i {
-            font-size: 11px;
-          }
-
-          &:hover {
-            text-decoration: underline;
-          }
         }
       }
 

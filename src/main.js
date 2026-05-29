@@ -115,7 +115,7 @@ function renderSkills(items) {
     .map(
       (item) => `
       <div>
-        <h4><i class="${item.icon}"></i> ${item.title}</h4>
+        <h4><i class="${item.icon}" aria-hidden="true"></i> ${item.title}</h4>
         <ul>
           ${item.items.map((skill) => `<li>${skill}</li>`).join("")}
         </ul>
@@ -125,11 +125,14 @@ function renderSkills(items) {
     .join("");
 }
 
-function renderResume(locale) {
+function renderResume(locale, options = {}) {
   const copy = resumeTranslations[locale] || resumeTranslations[DEFAULT_LOCALE];
+  const { restoreFocusSelector, statusMessage } = options;
 
   appElement.innerHTML = `
-  <main>
+  <a class="skip-link" href="#main-content">${copy.a11y.skipToContent}</a>
+  <div id="a11y-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+  <main id="main-content" tabindex="-1">
     <header>
       <div class="row">
         <h1>${import.meta.env.VITE_AUTHOR_NAME || copy.header.name}</h1>
@@ -142,7 +145,6 @@ function renderResume(locale) {
       <h2>${import.meta.env.VITE_AUTHOR_TITLE || copy.header.role}</h2>
     </header>
     <section>
-      <h3>${copy.sections.summaryTitle}</h3>
       <p>${copy.sections.summary}</p>
     </section>
 
@@ -168,13 +170,18 @@ function renderResume(locale) {
     <div class="contact-section">
       <h3>${copy.sections.contactTitle}</h3>
       <div class="contact-info">
-        <span><i class="fa-solid fa-house-laptop"></i> ${copy.contact.location}</span>
-        <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/jere-borgelin-0738b8200"><i class="fa-brands fa-linkedin"></i> ${copy.contact.linkedinLabel} <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-        <a target="_blank" rel="noopener noreferrer" href="https://github.com/thejebo"><i class="fa-brands fa-github"></i> ${copy.contact.githubLabel} <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        <span><i class="fa-solid fa-house-laptop" aria-hidden="true"></i> ${copy.contact.location}</span>
+        <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/jere-borgelin-0738b8200"><i class="fa-brands fa-linkedin" aria-hidden="true"></i> ${copy.contact.linkedinLabel} <span class="sr-only"> (${copy.a11y.opensInNewTab})</span> <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+        <a target="_blank" rel="noopener noreferrer" href="https://github.com/thejebo"><i class="fa-brands fa-github" aria-hidden="true"></i> ${copy.contact.githubLabel} <span class="sr-only"> (${copy.a11y.opensInNewTab})</span> <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
       </div>
     </div>
   </aside>
 `;
+
+  const skipLink = appElement.querySelector(".skip-link");
+  skipLink?.addEventListener("click", () => {
+    appElement.querySelector("#main-content")?.focus();
+  });
 
   appElement.querySelectorAll(".language-btn").forEach((button) => {
     button.addEventListener("click", () => {
@@ -184,21 +191,53 @@ function renderResume(locale) {
         nextLocale !== locale &&
         isSupportedLocale(nextLocale)
       ) {
-        setLocale(nextLocale);
+        setLocale(nextLocale, {
+          restoreFocusSelector: `.language-btn[data-lang="${nextLocale}"]`,
+          announceChange: true,
+        });
       }
     });
   });
 
   applyMetadata(locale, copy);
+
+  if (statusMessage) {
+    const statusElement = appElement.querySelector("#a11y-status");
+    if (statusElement) {
+      statusElement.textContent = "";
+      requestAnimationFrame(() => {
+        statusElement.textContent = statusMessage;
+      });
+    }
+  }
+
+  if (restoreFocusSelector) {
+    appElement.querySelector(restoreFocusSelector)?.focus();
+  }
 }
 
-function setLocale(locale) {
+function getLanguageChangeAnnouncement(locale) {
+  const copy = resumeTranslations[locale] || resumeTranslations[DEFAULT_LOCALE];
+  const languageName =
+    copy.a11y.languageNames?.[locale] || locale.toUpperCase();
+  return copy.a11y.languageChanged.replace("{language}", languageName);
+}
+
+function setLocale(locale, options = {}) {
   if (!isSupportedLocale(locale)) {
     return;
   }
 
   persistLocale(locale);
-  renderResume(locale);
+
+  const statusMessage = options.announceChange
+    ? getLanguageChangeAnnouncement(locale)
+    : null;
+
+  renderResume(locale, {
+    restoreFocusSelector: options.restoreFocusSelector,
+    statusMessage,
+  });
 }
 
 renderResume(getInitialLocale());
