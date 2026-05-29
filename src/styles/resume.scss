@@ -703,12 +703,6 @@ body[data-page="print"] #app aside .sets {
       box-sizing: border-box;
     }
 
-    // The references page uses an empty <aside> purely for matching the resume layout.
-    // Hide it in print to give references full width and avoid premature page breaks.
-    aside {
-      display: none !important;
-    }
-
     .references {
       h3 {
         font-size: 18px;
@@ -786,7 +780,7 @@ body[data-page="print"] #app aside .sets {
       }
 
       section {
-        padding: 0 0 6px 0;
+        padding: 0 0 4px 0;
 
         &.education {
           padding-left: 0;
@@ -794,12 +788,12 @@ body[data-page="print"] #app aside .sets {
 
         & > p {
           padding: 0 0 0 0;
-          line-height: 1.6;
+          line-height: 1.5;
         }
 
         h3 {
           font-size: 18px;
-          margin-bottom: 8px;
+          margin-bottom: 6px;
           border-bottom: 2px solid $lighter-primary;
         }
 
@@ -809,8 +803,8 @@ body[data-page="print"] #app aside .sets {
 
           & > li {
             width: 100%;
-            margin: 0 0 8px 0;
-            padding-bottom: 6px;
+            margin: 0 0 6px 0;
+            padding-bottom: 4px;
             line-height: 1.35;
             flex-direction: column;
             border-bottom: 2px solid $lighter-primary;
@@ -863,16 +857,14 @@ body[data-page="print"] #app aside .sets {
     aside {
       display: table-cell;
       width: 32%;
-      height: auto;
-      vertical-align: top;
       color: $print-sidebar-text;
-      padding: 0 var($print-content-inset + 30px) 20px 30px;
+      padding: 80px var($print-content-inset + 30px) 20px 30px;
       text-align: right;
       background-color: $print-sidebar-bg;
 
       h3 {
         text-align: center;
-        padding: 20px 0 12px 0;
+        padding: 54px 0 12px 0;
       }
 
       .sets h4 {
