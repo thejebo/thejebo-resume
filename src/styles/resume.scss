@@ -107,13 +107,9 @@
           display: block;
         }
       }
-      h4 {
-        display: inline-block;
-      }
+
       .date-range {
         height: auto;
-        margin-left: 4px;
-        display: inline-block;
       }
     }
 
@@ -271,7 +267,6 @@
 
       a > i.fa-arrow-up-right-from-square {
         font-size: 10px;
-        margin-left: 5px;
       }
     }
 
@@ -567,6 +562,71 @@
   }
 }
 
+body[data-page="print"] #app .language-switch,
+body[data-page="print"] #app .actions.language-switch,
+body[data-page="print"] #app .language-switch-label,
+body[data-page="print"] #app .language-btn {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.references .referrers-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+// Base layout for print-references — always flex so print renderer inherits proper context
+#print-references {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+
+  main {
+    flex: 2.15;
+  }
+
+  aside {
+    flex: 1;
+  }
+
+  .referrers-grid {
+    min-width: 0;
+    overflow: hidden;
+  }
+}
+
+.references .referrer-card {
+  padding: 8px 10px;
+  border: 1px solid #d7d7d7;
+  border-radius: 6px;
+}
+
+.references .referrer-name {
+  font-weight: 700;
+}
+
+.references .referrer-title {
+  margin-top: 2px;
+  font-size: 12px;
+  color: $grey;
+}
+
+.references .referrer-contact {
+  margin-top: 6px;
+  display: grid;
+  gap: 2px;
+  font-size: 12px;
+}
+
+.references .references-empty {
+  margin: 0;
+  color: $grey;
+  font-size: 12px;
+}
+
 // Resume print styles
 @media print {
   #app .language-switch,
@@ -577,6 +637,10 @@
     visibility: hidden !important;
   }
 
+  .skip-link {
+    display: none !important;
+  }
+
   @page {
     size: A4;
     margin: $print-page-margin;
@@ -584,8 +648,56 @@
 
   body {
     padding: 0;
+    display: block;
+    background-color: $darker-white;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+  }
+
+  // References page — mirrors the resume two-column layout
+  #print-references {
+    max-width: 100%;
+    margin: 0;
+    min-height: $print-page-height;
+    align-items: stretch;
+    break-before: page;
+    page-break-before: always;
+    box-shadow: none;
+
+    main {
+      min-width: 0;
+      padding: $print-content-inset $print-main-right-inset $print-content-inset
+        $print-content-inset;
+      box-sizing: border-box;
+    }
+
+    aside {
+      align-self: stretch;
+      padding: 0 14px;
+      color: $print-sidebar-text;
+      background-color: $print-sidebar-bg;
+    }
+
+    .references {
+      h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #323232;
+        margin-bottom: 12px;
+        border-bottom: 2px solid $lighter-primary;
+      }
+    }
+
+    .referrers-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .referrer-card {
+      min-width: 0;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
   }
 
   #app {
@@ -594,6 +706,16 @@
     max-width: 100%;
     flex-direction: row;
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+
+    .references .referrers-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .references .referrer-card {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
 
     main {
       flex: 2.15;

@@ -31,8 +31,47 @@ h6 {
 a {
   color: inherit;
   text-decoration: none;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: from-font;
 
   &:visited {
     color: inherit;
   }
+
+  &:focus-visible {
+    outline: 3px solid $primary;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 10000;
+  padding: 10px 12px;
+  background: $white;
+  color: $dark-grey;
+  border: 2px solid $primary;
+  border-radius: 6px;
+  transform: translateY(-200%);
+  transition: transform 0.15s ease;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
 }

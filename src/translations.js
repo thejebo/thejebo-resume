@@ -17,6 +17,15 @@ export const resumeTranslations = {
       role: "Senior Full-stack Web Developer",
       toggleLabel: "Kieli",
     },
+    a11y: {
+      skipToContent: "Siirry pääsisältöön",
+      opensInNewTab: "avautuu uuteen välilehteen",
+      languageChanged: "Kieli vaihdettu: {language}",
+      languageNames: {
+        fi: "Suomi",
+        en: "Englanti",
+      },
+    },
     sections: {
       summaryTitle: "Yhteenveto",
       summary:
@@ -103,16 +112,16 @@ export const resumeTranslations = {
       },
       {
         icon: "fa-solid fa-circle-nodes",
-        title: "Palvelut",
-        items: ["GitHub, GitLab", "AWS, UpCloud", "Datadog"],
+        title: "Pilvi & DevOps",
+        items: ["GitHub, GitLab", "AWS, UpCloud", "Datadog", "Aikido"],
       },
       {
         icon: "fa-solid fa-wrench",
         title: "Työkalut",
         items: [
           "VS Code, Visual Studio",
-          "GitHub Copilot, ChatGPT",
-          "GitHub Actions",
+          "GitHub Copilot, ChatGPT, CodeRabbit",
+          "GitHub Actions, Dependabot",
           "Jira, Trello",
           "Confluence",
           "Slack",
@@ -154,6 +163,15 @@ export const resumeTranslations = {
       name: "Jere Borgelin",
       role: "Senior Full-stack Web Developer",
       toggleLabel: "Language",
+    },
+    a11y: {
+      skipToContent: "Skip to main content",
+      opensInNewTab: "opens in a new tab",
+      languageChanged: "Language changed to {language}",
+      languageNames: {
+        fi: "Finnish",
+        en: "English",
+      },
     },
     sections: {
       summaryTitle: "Summary",
@@ -241,8 +259,8 @@ export const resumeTranslations = {
       },
       {
         icon: "fa-solid fa-circle-nodes",
-        title: "Services",
-        items: ["GitHub, GitLab", "AWS, UpCloud", "Datadog"],
+        title: "Cloud & DevOps",
+        items: ["GitHub, GitLab", "AWS, UpCloud", "Datadog", "Aikido"],
       },
       {
         icon: "fa-solid fa-wrench",
@@ -250,7 +268,7 @@ export const resumeTranslations = {
         items: [
           "VS Code, Visual Studio",
           "GitHub Copilot, ChatGPT, CodeRabbit",
-          "GitHub Actions",
+          "GitHub Actions, Dependabot",
           "Jira, Trello",
           "Confluence",
           "Slack",

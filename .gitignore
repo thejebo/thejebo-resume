@@ -28,5 +28,5 @@ dist-ssr
 .qodo
 
 # Private local cover letter drafts
-public/letters.local/
+letters.local/
 local-resources/
