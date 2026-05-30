@@ -1,4 +1,4 @@
-import "./main.js";
+import "./main.ts";
 
 const BASE_URL = import.meta.env.BASE_URL;
 const LANGUAGE_STORAGE_KEY = "resume-language";
@@ -19,19 +19,6 @@ const escapeHtml = (value = "") =>
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
-
-const formatFinnishPhone = (phone) => {
-  const cleaned = phone.replace(/\s/g, "");
-  const match = cleaned.match(/^\+358(\d+)$/);
-  if (!match) return phone;
-  const sub = match[1];
-  // Mobile: 2-digit prefix (4x, 5x) → +358 XX XXX XXXX
-  if (/^[45]/.test(sub) && sub.length >= 9) {
-    return `+358 ${sub.slice(0, 2)} ${sub.slice(2, 5)} ${sub.slice(5)}`;
-  }
-  // Single-digit area code (landlines: 9=Helsinki, etc.)
-  return `+358 ${sub.slice(0, 1)} ${sub.slice(1)}`;
-};
 
 const getInitialLocale = () => {
   try {
@@ -75,7 +62,7 @@ const renderReferrersSection = (referrers, locale) => {
       <main>
         <section class="references" data-private="true">
           <h3>${escapeHtml(heading)}</h3>
-          <p class="references-empty">No local referrers file found (local-resources/Referrers.json).</p>
+          <p class="references-empty">No local referrers file found (resources.local/Referrers.json).</p>
         </section>
       </main>
       <aside></aside>

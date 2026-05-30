@@ -29,4 +29,6 @@ dist-ssr
 
 # Private local cover letter drafts
 letters.local/
-local-resources/
+resources.local/
+job-data/
+.job-feed-auth/

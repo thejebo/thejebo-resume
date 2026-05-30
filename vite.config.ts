@@ -1,8 +1,11 @@
 import { defineConfig } from "vite";
-import { resolve } from "path";
-import fs from "fs";
+import fs from "node:fs";
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
-export default defineConfig(({ command }) => ({
+const projectRoot = fileURLToPath(new URL(".", import.meta.url));
+
+export default defineConfig(() => ({
   base: "/thejebo-resume/",
   plugins: [
     {
@@ -24,8 +27,8 @@ export default defineConfig(({ command }) => ({
 
           if (pathOnly === "/thejebo-resume/private/referrers.json") {
             const filePath = resolve(
-              __dirname,
-              "local-resources",
+              projectRoot,
+              "resources.local",
               "Referrers.json",
             );
 
@@ -43,8 +46,8 @@ export default defineConfig(({ command }) => ({
 
           if (pathOnly === "/thejebo-resume/private/referrers") {
             const filePath = resolve(
-              __dirname,
-              "local-resources",
+              projectRoot,
+              "resources.local",
               "Referrers.md",
             );
 
@@ -63,7 +66,7 @@ export default defineConfig(({ command }) => ({
           const prefix = "/thejebo-resume/letters.local/";
           if (rawUrl.startsWith(prefix)) {
             const fileName = rawUrl.slice(prefix.length).split("?")[0];
-            const filePath = resolve(__dirname, "letters.local", fileName);
+            const filePath = resolve(projectRoot, "letters.local", fileName);
 
             if (fs.existsSync(filePath)) {
               res.setHeader("Content-Type", "application/json");
@@ -80,8 +83,8 @@ export default defineConfig(({ command }) => ({
   build: {
     rollupOptions: {
       input: {
-        main: resolve(__dirname, "index.html"),
-        coverLetter: resolve(__dirname, "cover-letter.html"),
+        main: resolve(projectRoot, "index.html"),
+        coverLetter: resolve(projectRoot, "cover-letter.html"),
       },
     },
   },

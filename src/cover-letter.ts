@@ -99,14 +99,6 @@ const renderMessage = (title, body, detail = "") => {
 
 const renderCoverLetter = (letter) => {
   const copy = getCopy(currentLocale);
-  const role = letter.meta?.role || copy.defaults.role;
-  const roleLabel = letter.meta?.roleLabel || copy.defaults.roleLabel;
-  const company = letter.meta?.company || copy.defaults.company;
-  const positionId = letter.meta?.positionId || "";
-  const recipientName = letter.recipient?.name || copy.defaults.recipientName;
-  const recipientTeam = letter.recipient?.team || "";
-  const recipientCompany = letter.recipient?.company || company;
-  const recipientLocation = letter.recipient?.location || "";
   const authorName =
     import.meta.env.VITE_AUTHOR_NAME || letter.author?.name || "Jere Borgelin";
   const authorTitle =
