@@ -4,15 +4,34 @@ import {
   resumeTranslations,
   SUPPORTED_LOCALES,
 } from "./translations";
+import type {
+  EducationItem,
+  Locale,
+  RenderResumeOptions,
+  ResumeTranslation,
+  SetLocaleOptions,
+  SkillGroup,
+  WorkExperienceItem,
+} from "./types/shared";
 
 const LANGUAGE_STORAGE_KEY = "resume-language";
-const appElement = document.querySelector("#app");
 
-function isSupportedLocale(locale) {
-  return SUPPORTED_LOCALES.includes(locale);
+function getAppElement(): HTMLElement {
+  const appElement = document.querySelector<HTMLElement>("#app");
+  if (!appElement) {
+    throw new Error("Missing #app element");
+  }
+
+  return appElement;
 }
 
-function getInitialLocale() {
+const appElement = getAppElement();
+
+function isSupportedLocale(locale: string): locale is Locale {
+  return SUPPORTED_LOCALES.includes(locale as Locale);
+}
+
+function getInitialLocale(): Locale {
   try {
     const storedLocale = localStorage.getItem(LANGUAGE_STORAGE_KEY);
     if (storedLocale && isSupportedLocale(storedLocale)) {
@@ -25,7 +44,7 @@ function getInitialLocale() {
   return DEFAULT_LOCALE;
 }
 
-function persistLocale(locale) {
+function persistLocale(locale: Locale): void {
   try {
     localStorage.setItem(LANGUAGE_STORAGE_KEY, locale);
   } catch {
@@ -33,14 +52,14 @@ function persistLocale(locale) {
   }
 }
 
-function setMetaContent(selector, content) {
+function setMetaContent(selector: string, content: string): void {
   const metaElement = document.querySelector(selector);
   if (metaElement) {
     metaElement.setAttribute("content", content);
   }
 }
 
-function applyMetadata(locale, copy) {
+function applyMetadata(locale: Locale, copy: ResumeTranslation): void {
   document.documentElement.lang = locale;
   document.title = copy.meta.title;
   setMetaContent("meta[name='description']", copy.meta.description);
@@ -51,7 +70,7 @@ function applyMetadata(locale, copy) {
   setMetaContent("meta[name='twitter:description']", copy.meta.description);
 }
 
-function renderDateRange(item) {
+function renderDateRange(item: WorkExperienceItem): string {
   if (!item.toDateTime || !item.toLabel) {
     return `
       <div class="date-range">
@@ -69,10 +88,10 @@ function renderDateRange(item) {
   `;
 }
 
-function renderWorkExperience(items) {
+function renderWorkExperience(items: WorkExperienceItem[]): string {
   return items
     .map(
-      (item) => `
+      (item: WorkExperienceItem) => `
       <li>
         <div class="details">
           <h4>${item.company}</h4>
@@ -81,7 +100,7 @@ function renderWorkExperience(items) {
         <div class="job-description">
           <span>${item.role}</span>
           <ul>
-            ${item.bullets.map((bullet) => `<li>${bullet}</li>`).join("")}
+            ${item.bullets.map((bullet: string) => `<li>${bullet}</li>`).join("")}
           </ul>
         </div>
       </li>
@@ -90,10 +109,10 @@ function renderWorkExperience(items) {
     .join("");
 }
 
-function renderEducation(items) {
+function renderEducation(items: EducationItem[]): string {
   return items
     .map(
-      (item) => `
+      (item: EducationItem) => `
       <li>
         <div class="details">
           <h4>${item.institution}</h4>
@@ -110,14 +129,14 @@ function renderEducation(items) {
     .join("");
 }
 
-function renderSkills(items) {
+function renderSkills(items: SkillGroup[]): string {
   return items
     .map(
-      (item) => `
+      (item: SkillGroup) => `
       <div>
         <h4><i class="${item.icon}" aria-hidden="true"></i> ${item.title}</h4>
         <ul>
-          ${item.items.map((skill) => `<li>${skill}</li>`).join("")}
+          ${item.items.map((skill: string) => `<li>${skill}</li>`).join("")}
         </ul>
       </div>
     `,
@@ -125,8 +144,8 @@ function renderSkills(items) {
     .join("");
 }
 
-function renderResume(locale, options = {}) {
-  const copy = resumeTranslations[locale] || resumeTranslations[DEFAULT_LOCALE];
+function renderResume(locale: Locale, options: RenderResumeOptions = {}): void {
+  const copy = resumeTranslations[locale];
   const { restoreFocusSelector, statusMessage } = options;
 
   appElement.innerHTML = `
@@ -178,31 +197,33 @@ function renderResume(locale, options = {}) {
   </aside>
 `;
 
-  const skipLink = appElement.querySelector(".skip-link");
+  const skipLink = appElement.querySelector<HTMLAnchorElement>(".skip-link");
   skipLink?.addEventListener("click", () => {
-    appElement.querySelector("#main-content")?.focus();
+    appElement.querySelector<HTMLElement>("#main-content")?.focus();
   });
 
-  appElement.querySelectorAll(".language-btn").forEach((button) => {
-    button.addEventListener("click", () => {
-      const nextLocale = button.dataset.lang;
-      if (
-        nextLocale &&
-        nextLocale !== locale &&
-        isSupportedLocale(nextLocale)
-      ) {
-        setLocale(nextLocale, {
-          restoreFocusSelector: `.language-btn[data-lang="${nextLocale}"]`,
-          announceChange: true,
-        });
-      }
+  appElement
+    .querySelectorAll<HTMLButtonElement>(".language-btn")
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        const nextLocale = button.dataset.lang;
+        if (
+          nextLocale &&
+          nextLocale !== locale &&
+          isSupportedLocale(nextLocale)
+        ) {
+          setLocale(nextLocale, {
+            restoreFocusSelector: `.language-btn[data-lang="${nextLocale}"]`,
+            announceChange: true,
+          });
+        }
+      });
     });
-  });
 
   applyMetadata(locale, copy);
 
   if (statusMessage) {
-    const statusElement = appElement.querySelector("#a11y-status");
+    const statusElement = appElement.querySelector<HTMLElement>("#a11y-status");
     if (statusElement) {
       statusElement.textContent = "";
       requestAnimationFrame(() => {
@@ -212,18 +233,18 @@ function renderResume(locale, options = {}) {
   }
 
   if (restoreFocusSelector) {
-    appElement.querySelector(restoreFocusSelector)?.focus();
+    appElement.querySelector<HTMLElement>(restoreFocusSelector)?.focus();
   }
 }
 
-function getLanguageChangeAnnouncement(locale) {
-  const copy = resumeTranslations[locale] || resumeTranslations[DEFAULT_LOCALE];
+function getLanguageChangeAnnouncement(locale: Locale): string {
+  const copy = resumeTranslations[locale];
   const languageName =
     copy.a11y.languageNames?.[locale] || locale.toUpperCase();
   return copy.a11y.languageChanged.replace("{language}", languageName);
 }
 
-function setLocale(locale, options = {}) {
+function setLocale(locale: string, options: SetLocaleOptions = {}): void {
   if (!isSupportedLocale(locale)) {
     return;
   }

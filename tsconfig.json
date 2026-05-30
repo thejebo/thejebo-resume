@@ -11,9 +11,16 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
     "types": ["node", "vite/client"]
   },
-  "include": ["src/**/*.ts", "tools/**/*.ts", "vite.config.ts", "eslint.config.js"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "tools/**/*.ts",
+    "tools/**/*.d.ts",
+    "vite.config.ts",
+    "eslint.config.js"
+  ],
   "exclude": ["dist", "node_modules"]
 }

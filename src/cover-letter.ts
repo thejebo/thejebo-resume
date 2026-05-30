@@ -4,20 +4,36 @@ import {
   DEFAULT_LOCALE,
   SUPPORTED_LOCALES,
 } from "./translations";
+import type { CoverLetterTranslation, Locale } from "./types/shared";
+import type { CoverLetterData } from "./types/cover-letter";
 
 const BASE_URL = import.meta.env.BASE_URL;
 const POLL_INTERVAL_MS = 1200;
 const LANGUAGE_STORAGE_KEY = "resume-language";
 
-let refreshTimer;
-let currentLocale = getInitialLocale();
-let currentLetter = null;
+type ResolvedCoverLetterAuthor = {
+  name: string;
+  title: string;
+  location?: string;
+  email: string;
+  phone?: string;
+};
 
-function isSupportedLocale(locale) {
-  return SUPPORTED_LOCALES.includes(locale);
+const appElement = document.querySelector<HTMLElement>("#app");
+
+if (!appElement) {
+  throw new Error("Missing #app element");
 }
 
-function getInitialLocale() {
+let refreshTimer: number | undefined;
+let currentLocale: Locale = getInitialLocale();
+let currentLetter: CoverLetterData | null = null;
+
+function isSupportedLocale(locale: string): locale is Locale {
+  return SUPPORTED_LOCALES.includes(locale as Locale);
+}
+
+function getInitialLocale(): Locale {
   try {
     const storedLocale = localStorage.getItem(LANGUAGE_STORAGE_KEY);
     if (storedLocale && isSupportedLocale(storedLocale)) {
@@ -29,7 +45,7 @@ function getInitialLocale() {
   return DEFAULT_LOCALE;
 }
 
-function persistLocale(locale) {
+function persistLocale(locale: Locale): void {
   try {
     localStorage.setItem(LANGUAGE_STORAGE_KEY, locale);
   } catch {
@@ -37,13 +53,13 @@ function persistLocale(locale) {
   }
 }
 
-function getCopy(locale) {
-  return (
-    coverLetterTranslations[locale] || coverLetterTranslations[DEFAULT_LOCALE]
-  );
+function getCopy(locale: string): CoverLetterTranslation {
+  return isSupportedLocale(locale)
+    ? coverLetterTranslations[locale]
+    : coverLetterTranslations[DEFAULT_LOCALE];
 }
 
-const withNoCacheParam = (url) => {
+const withNoCacheParam = (url: string): string => {
   if (!import.meta.env.DEV) {
     return url;
   }
@@ -52,14 +68,14 @@ const withNoCacheParam = (url) => {
   return `${url}${separator}t=${Date.now()}`;
 };
 
-const stopAutoRefresh = () => {
+const stopAutoRefresh = (): void => {
   if (refreshTimer) {
     window.clearInterval(refreshTimer);
     refreshTimer = undefined;
   }
 };
 
-const slugFromHash = () => {
+const slugFromHash = (): string => {
   const raw = window.location.hash.replace(/^#\/?/, "").trim();
   if (!raw) {
     return "";
@@ -72,7 +88,7 @@ const slugFromHash = () => {
   return raw;
 };
 
-const escapeHtml = (value = "") =>
+const escapeHtml = (value: string | number | null | undefined = ""): string =>
   String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
@@ -80,9 +96,9 @@ const escapeHtml = (value = "") =>
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
 
-const renderMessage = (title, body, detail = "") => {
+const renderMessage = (title: string, body: string, detail = ""): void => {
   const copy = getCopy(currentLocale);
-  document.querySelector("#app").innerHTML = `
+  appElement.innerHTML = `
     <div class="cover-letter-message">
       <div class="actions language-switch" role="group" aria-label="${copy.header.toggleLabel}">
         <span class="language-switch-label">${copy.header.toggleLabel}</span>
@@ -97,23 +113,41 @@ const renderMessage = (title, body, detail = "") => {
   attachLanguageSwitchListeners();
 };
 
-const renderCoverLetter = (letter) => {
-  const copy = getCopy(currentLocale);
-  const authorName =
-    import.meta.env.VITE_AUTHOR_NAME || letter.author?.name || "Jere Borgelin";
-  const authorTitle =
-    import.meta.env.VITE_AUTHOR_TITLE ||
-    letter.author?.title ||
-    copy.defaults.authorTitle;
-  const authorLocation =
-    import.meta.env.VITE_AUTHOR_LOCATION ||
-    letter.author?.location ||
-    copy.defaults.authorLocation;
-  const authorEmail = import.meta.env.VITE_EMAIL || letter.author?.email || "";
-  const authorPhone =
-    import.meta.env.VITE_PHONE_NUMBER || letter.author?.phone || "";
+function resolveAuthor(letter: CoverLetterData): ResolvedCoverLetterAuthor {
+  const name = import.meta.env.VITE_AUTHOR_NAME || letter.author.name;
+  const title = import.meta.env.VITE_AUTHOR_TITLE || letter.author.title;
+  const email = import.meta.env.VITE_EMAIL || letter.author.email;
+  const phone =
+    import.meta.env.VITE_PHONE_NUMBER || letter.author.phone || undefined;
+  const location =
+    import.meta.env.VITE_AUTHOR_LOCATION || letter.author.location || undefined;
 
-  const formatDate = (isoDate) => {
+  if (!name) {
+    throw new Error("Cover letter author requires a name.");
+  }
+
+  if (!title) {
+    throw new Error("Cover letter author requires a title.");
+  }
+
+  if (!email) {
+    throw new Error("Cover letter author requires an email address.");
+  }
+
+  return {
+    name,
+    title,
+    location,
+    email,
+    phone,
+  };
+}
+
+const renderCoverLetter = (letter: CoverLetterData): void => {
+  const copy = getCopy(currentLocale);
+  const author = resolveAuthor(letter);
+
+  const formatDate = (isoDate?: string): string => {
     const date = isoDate ? new Date(isoDate) : new Date();
     return new Intl.DateTimeFormat(copy.dateLocale, {
       day: "2-digit",
@@ -123,32 +157,32 @@ const renderCoverLetter = (letter) => {
   };
 
   const createdAt = new Date().toISOString().slice(0, 10);
-  const displayDate = formatDate(createdAt);
+  const displayDate = formatDate();
 
   const body = Array.isArray(letter.body) ? letter.body : [];
   const highlights = Array.isArray(letter.highlights) ? letter.highlights : [];
 
   const bodyMarkup = body
-    .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
+    .map((paragraph: string) => `<p>${escapeHtml(paragraph)}</p>`)
     .join("");
 
   const highlightsMarkup = highlights
-    .map((point) => `<li>${escapeHtml(point)}</li>`)
+    .map((point: string) => `<li>${escapeHtml(point)}</li>`)
     .join("");
 
-  document.querySelector("#app").innerHTML = `
+  appElement.innerHTML = `
     <div class="cover-letter-page">
       <main class="cover-letter-main">
         <header>
           <div>
-            <h1>${escapeHtml(authorName)}</h1>
-            <h2>${escapeHtml(authorTitle)}</h2>
+            <h1>${escapeHtml(author.name)}</h1>
+            <h2>${escapeHtml(author.title)}</h2>
           </div>
 
           <div class="contact-section">
-            ${authorPhone ? `<span>${escapeHtml(authorPhone)}</span>` : ""}
-            ${authorEmail ? `<span>${escapeHtml(authorEmail)}</span>` : ""}
-            ${authorLocation ? `<span>${escapeHtml(authorLocation)}</span>` : ""}
+            ${author.phone ? `<span>${escapeHtml(author.phone)}</span>` : ""}
+            <span>${escapeHtml(author.email)}</span>
+            ${author.location ? `<span>${escapeHtml(author.location)}</span>` : ""}
           </div>
 
           <div class="date-section">
@@ -187,7 +221,7 @@ const renderCoverLetter = (letter) => {
           </section>
 
           <div class="signature">
-            <p class="signature-text">${escapeHtml(letter.signature || authorName)}</p>
+            <p class="signature-text">${escapeHtml(letter.signature || author.name)}</p>
           </div>
         </div>
       </main>
@@ -196,34 +230,36 @@ const renderCoverLetter = (letter) => {
   attachLanguageSwitchListeners();
 };
 
-const attachLanguageSwitchListeners = () => {
-  document.querySelectorAll(".language-btn").forEach((button) => {
-    button.addEventListener("click", () => {
-      const nextLocale = button.dataset.lang;
-      if (nextLocale && nextLocale !== currentLocale && isSupportedLocale(nextLocale)) {
-        currentLocale = nextLocale;
-        persistLocale(nextLocale);
-        if (currentLetter) {
-          renderCoverLetter(currentLetter);
-        } else {
-          run();
+const attachLanguageSwitchListeners = (): void => {
+  appElement
+    .querySelectorAll<HTMLButtonElement>(".language-btn")
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        const nextLocale = button.dataset.lang;
+        if (
+          nextLocale &&
+          nextLocale !== currentLocale &&
+          isSupportedLocale(nextLocale)
+        ) {
+          currentLocale = nextLocale;
+          persistLocale(nextLocale);
+          if (currentLetter) {
+            renderCoverLetter(currentLetter);
+          } else {
+            run();
+          }
         }
-      }
+      });
     });
-  });
 };
 
-const run = async () => {
+const run = async (): Promise<void> => {
   stopAutoRefresh();
   const slug = slugFromHash();
   const copy = getCopy(currentLocale);
 
   if (!slug) {
-    renderMessage(
-      copy.noSlugTitle,
-      copy.noSlugBody,
-      copy.noSlugDetail,
-    );
+    renderMessage(copy.noSlugTitle, copy.noSlugBody, copy.noSlugDetail);
     return;
   }
 
@@ -250,7 +286,7 @@ const run = async () => {
       return;
     }
 
-    const letter = await letterResponse.json();
+    const letter = (await letterResponse.json()) as CoverLetterData;
     currentLetter = letter;
     renderCoverLetter(letter);
 
@@ -267,7 +303,7 @@ const run = async () => {
             return;
           }
 
-          const liveLetter = await liveResponse.json();
+          const liveLetter = (await liveResponse.json()) as CoverLetterData;
           const nextFingerprint = JSON.stringify(liveLetter);
 
           if (nextFingerprint !== lastFingerprint) {
@@ -281,11 +317,7 @@ const run = async () => {
       }, POLL_INTERVAL_MS);
     }
   } catch (error) {
-    renderMessage(
-      copy.loadErrorTitle,
-      copy.loadErrorBody,
-      String(error),
-    );
+    renderMessage(copy.loadErrorTitle, copy.loadErrorBody, String(error));
   }
 };
 

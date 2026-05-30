@@ -1,6 +1,12 @@
-export const DEFAULT_LOCALE = "fi";
+import type {
+  CoverLetterTranslation,
+  Locale,
+  ResumeTranslation,
+} from "./types/shared";
 
-export const SUPPORTED_LOCALES = ["fi", "en"];
+export const DEFAULT_LOCALE = "fi" as const;
+
+export const SUPPORTED_LOCALES = ["fi", "en"] as const;
 
 export const coverLetterTranslations = {
   fi: {
@@ -65,7 +71,7 @@ export const coverLetterTranslations = {
       authorLocation: "Turku, Finland",
     },
   },
-};
+} satisfies Record<Locale, CoverLetterTranslation>;
 
 export const resumeTranslations = {
   fi: {
@@ -362,4 +368,4 @@ export const resumeTranslations = {
       githubLabel: "thejebo",
     },
   },
-};
+} satisfies Record<Locale, ResumeTranslation>;

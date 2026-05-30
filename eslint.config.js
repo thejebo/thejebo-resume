@@ -21,6 +21,15 @@ export default tseslint.config(
     },
     rules: {
       "no-undef": "off",
+      "@typescript-eslint/no-explicit-any": "error",
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "TSUnknownKeyword",
+          message:
+            "Use a concrete domain type or shared JSON shape instead of 'unknown'.",
+        },
+      ],
     },
   },
 );

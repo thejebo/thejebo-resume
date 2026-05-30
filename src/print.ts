@@ -1,9 +1,15 @@
 import "./main.ts";
 
+import type { JsonObject, JsonValue, Locale, Referrer } from "./types/shared";
+
 const BASE_URL = import.meta.env.BASE_URL;
 const LANGUAGE_STORAGE_KEY = "resume-language";
 
-const withNoCacheParam = (url) => {
+function isJsonObject(value: JsonValue): value is JsonObject {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+const withNoCacheParam = (url: string): string => {
   if (!import.meta.env.DEV) {
     return url;
   }
@@ -12,7 +18,7 @@ const withNoCacheParam = (url) => {
   return `${url}${separator}t=${Date.now()}`;
 };
 
-const escapeHtml = (value = "") =>
+const escapeHtml = (value: string | number | null | undefined = ""): string =>
   String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
@@ -20,7 +26,7 @@ const escapeHtml = (value = "") =>
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
 
-const getInitialLocale = () => {
+const getInitialLocale = (): Locale => {
   try {
     const storedLocale = localStorage.getItem(LANGUAGE_STORAGE_KEY);
     if (storedLocale === "fi" || storedLocale === "en") {
@@ -33,31 +39,36 @@ const getInitialLocale = () => {
   return "fi";
 };
 
-const parseReferrersJson = (payload) => {
+const parseReferrersJson = (payload: JsonValue): Referrer[] => {
   const list = Array.isArray(payload)
     ? payload
-    : payload && Array.isArray(payload.referrers)
+    : isJsonObject(payload) && Array.isArray(payload.referrers)
       ? payload.referrers
       : [];
 
   return list
-    .filter((item) => item && typeof item === "object")
+    .filter((item): item is JsonObject => isJsonObject(item))
     .map((item) => ({
       name: String(item.name || "").trim(),
       title: String(item.title || "").trim(),
       email: String(item.email || "").trim(),
       phone: String(item.phone || "").trim(),
     }))
-    .filter((item) => item.name || item.title || item.email || item.phone);
+    .filter((item: Referrer) =>
+      Boolean(item.name || item.title || item.email || item.phone),
+    );
 };
 
-const getReferencesHeading = (locale) =>
+const getReferencesHeading = (locale: Locale): string =>
   locale === "en" ? "References" : "Suosittelijat";
 
-const renderReferrersSection = (referrers, locale) => {
+const renderReferrersSection = (
+  referrers: Referrer[],
+  locale: Locale,
+): string => {
   const heading = getReferencesHeading(locale);
 
-  if (!Array.isArray(referrers) || referrers.length === 0) {
+  if (referrers.length === 0) {
     return `
       <main>
         <section class="references" data-private="true">
@@ -71,7 +82,7 @@ const renderReferrersSection = (referrers, locale) => {
 
   const cards = referrers
     .map(
-      (ref) => `
+      (ref: Referrer) => `
       <div class="referrer-card">
         <div class="referrer-name">${escapeHtml(ref.name)}</div>
         <div class="referrer-title">${escapeHtml(ref.title)}</div>
@@ -95,23 +106,24 @@ const renderReferrersSection = (referrers, locale) => {
   `;
 };
 
-const insertReferencesSection = (sectionHtml) => {
-  const app = document.querySelector("#app");
+const insertReferencesSection = (sectionHtml: string): void => {
+  const app = document.querySelector<HTMLElement>("#app");
   if (!app) {
     return;
   }
 
-  let container = document.querySelector("#print-references");
+  let container = document.querySelector<HTMLElement>("#print-references");
   if (!container) {
-    container = document.createElement("div");
-    container.id = "print-references";
-    document.body.appendChild(container);
+    const nextContainer = document.createElement("div");
+    nextContainer.id = "print-references";
+    document.body.appendChild(nextContainer);
+    container = nextContainer;
   }
 
   container.innerHTML = sectionHtml;
 };
 
-const run = async () => {
+const run = async (): Promise<void> => {
   document.body.dataset.page = "print";
 
   const locale = getInitialLocale();
@@ -127,7 +139,7 @@ const run = async () => {
       return;
     }
 
-    const json = await response.json();
+    const json = (await response.json()) as JsonValue;
     const referrers = parseReferrersJson(json);
     insertReferencesSection(renderReferrersSection(referrers, locale));
   } catch {
