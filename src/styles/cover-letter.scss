@@ -43,10 +43,14 @@
       flex: 2.5;
       padding: 0;
 
-      .main-header {
-        padding: 20px 30px;
-        background-color: $primary;
+      header {
         color: $white;
+        display: flex;
+        padding: 20px 30px;
+        flex-direction: row;
+        align-content: center;
+        justify-content: space-between;
+        background-color: $primary;
 
         h1 {
           font-size: 28px;
@@ -59,40 +63,35 @@
           font-weight: 300;
           margin: 0;
         }
-      }
 
-      .letter-header {
-        margin: 0;
-        padding: 20px 30px 16px;
-        border-bottom: 2px solid $lighter-primary;
-
-        .role-label {
-          font-size: 11px;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          color: #5b5b5b;
-          font-weight: 500;
-          margin: 0 0 6px 0;
+        .contact-section {
+          display: flex;
+          flex-direction: column;
         }
 
-        h3 {
-          font-size: 18px;
-          font-weight: 600;
-          color: $dark-grey;
-          margin: 0 0 8px 0;
-
-          .position-id {
+        .contact-section,
+        .date-section {
+          span {
             display: block;
             font-size: 14px;
-            color: $grey;
-            font-weight: 400;
-          }
-        }
+            margin-bottom: 10px;
 
-        .company {
-          font-size: 15px;
-          color: $grey;
-          margin: 0 0 8px 0;
+            span,
+            a {
+              color: $darker-white;
+            }
+
+            a:hover {
+              color: $white;
+              text-decoration: underline;
+            }
+          }
+
+          time {
+            display: block;
+            font-size: 18px;
+            color: $darker-white;
+          }
         }
       }
 
@@ -103,7 +102,7 @@
         line-height: 1.6;
 
         .letter-section {
-          margin-bottom: 24px;
+          margin-bottom: 20px;
 
           &:last-of-type {
             margin-bottom: 0;
@@ -146,73 +145,6 @@
         }
       }
     }
-
-    .cover-letter-aside {
-      flex: 1;
-      color: $white;
-      display: flex;
-      font-size: 12px;
-      padding: 57px 16px 20px 16px;
-      flex-direction: column;
-      background-color: $dark-grey;
-
-      .contact-section {
-        padding-top: 16px;
-      }
-
-      .contact-section,
-      .recipient-section,
-      .date-section,
-      .source-section {
-        margin-bottom: 24px;
-
-        h3 {
-          font-size: 16px;
-          font-weight: 500;
-          margin: 0 0 10px 0;
-          padding-bottom: 6px;
-          border-bottom: $aside-divider;
-        }
-
-        .contact-item {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          margin-bottom: 10px;
-          font-size: 14px;
-
-          i {
-            width: 16px;
-            font-size: 16px;
-            color: $primary;
-          }
-
-          span,
-          a {
-            color: $darker-white;
-          }
-
-          a:hover {
-            color: $white;
-            text-decoration: underline;
-          }
-        }
-
-        .recipient-details {
-          p {
-            margin: 0 0 4px 0;
-            font-size: 14px;
-            color: $darker-white;
-          }
-        }
-
-        time {
-          display: block;
-          font-size: 14px;
-          color: $darker-white;
-        }
-      }
-    }
   }
 }
 
@@ -222,17 +154,13 @@
     .cover-letter-page {
       flex-direction: column;
 
-      .cover-letter-aside {
+      .cover-letter-main .cover-letter-aside {
         order: -1;
       }
 
       .cover-letter-main {
-        .main-header {
+        header {
           padding: 16px 20px;
-        }
-
-        .letter-header {
-          padding: 16px 20px 12px;
         }
 
         .letter-body {
@@ -243,37 +171,46 @@
   }
 }
 
-// Cover letter print styles
 @media print {
+  @page {
+    size: A4;
+    margin: $print-page-margin;
+  }
+
+  body {
+    padding: 0;
+    margin: 0;
+  }
+
   #app {
     .cover-letter-page {
-      min-height: $print-page-height;
       box-shadow: none;
       flex-direction: row-reverse;
+      min-height: $print-page-height;
 
       .cover-letter-main {
         flex: 2.3;
         padding: 0;
         box-sizing: border-box;
 
-        .main-header {
-          padding: $print-content-inset 20px $print-content-inset
-            $print-content-inset;
-          background-color: $print-subtitle-bg;
+        header {
+          padding: 10mm 20mm 6mm;
+          background-color: $primary;
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
 
           h1,
           h2 {
-            color: $print-subtitle-text;
+            color: $white;
+          }
+
+          .language-switch {
+            display: none;
           }
         }
 
-        .letter-header {
-          margin: 0;
-          padding: 16px $print-main-right-inset 12px $print-content-inset;
-        }
-
         .letter-body {
-          padding: 0 $print-main-right-inset 0 $print-content-inset;
+          padding: 8mm 20mm 2mm;
 
           p {
             margin-bottom: 10px;
@@ -289,33 +226,11 @@
           }
 
           .signature {
-            margin-top: 24px;
+            margin-top: 30px;
 
             .signature-text {
               font-size: 22px;
             }
-          }
-        }
-      }
-
-      .cover-letter-aside {
-        flex: 1;
-        color: $print-sidebar-text;
-        padding: $print-content-inset 16px;
-        background-color: $print-sidebar-bg;
-
-        .contact-section,
-        .recipient-section,
-        .date-section {
-          h3 {
-            color: $print-sidebar-heading-color;
-            border-bottom: $aside-divider;
-          }
-
-          .contact-item span,
-          .recipient-details p,
-          time {
-            color: $print-sidebar-list-color;
           }
         }
       }

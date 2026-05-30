@@ -1,9 +1,47 @@
 import "./styles/cover-letter-bundle.scss";
+import {
+  coverLetterTranslations,
+  DEFAULT_LOCALE,
+  SUPPORTED_LOCALES,
+} from "./translations";
 
 const BASE_URL = import.meta.env.BASE_URL;
 const POLL_INTERVAL_MS = 1200;
+const LANGUAGE_STORAGE_KEY = "resume-language";
 
 let refreshTimer;
+let currentLocale = getInitialLocale();
+let currentLetter = null;
+
+function isSupportedLocale(locale) {
+  return SUPPORTED_LOCALES.includes(locale);
+}
+
+function getInitialLocale() {
+  try {
+    const storedLocale = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+    if (storedLocale && isSupportedLocale(storedLocale)) {
+      return storedLocale;
+    }
+  } catch {
+    // localStorage may be unavailable in strict privacy contexts.
+  }
+  return DEFAULT_LOCALE;
+}
+
+function persistLocale(locale) {
+  try {
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, locale);
+  } catch {
+    // localStorage may be unavailable in strict privacy contexts.
+  }
+}
+
+function getCopy(locale) {
+  return (
+    coverLetterTranslations[locale] || coverLetterTranslations[DEFAULT_LOCALE]
+  );
+}
 
 const withNoCacheParam = (url) => {
   if (!import.meta.env.DEV) {
@@ -43,21 +81,29 @@ const escapeHtml = (value = "") =>
     .replaceAll("'", "&#39;");
 
 const renderMessage = (title, body, detail = "") => {
+  const copy = getCopy(currentLocale);
   document.querySelector("#app").innerHTML = `
     <div class="cover-letter-message">
+      <div class="actions language-switch" role="group" aria-label="${copy.header.toggleLabel}">
+        <span class="language-switch-label">${copy.header.toggleLabel}</span>
+        <button type="button" class="language-btn ${currentLocale === "fi" ? "is-active" : ""}" data-lang="fi" aria-pressed="${currentLocale === "fi"}">FI</button>
+        <button type="button" class="language-btn ${currentLocale === "en" ? "is-active" : ""}" data-lang="en" aria-pressed="${currentLocale === "en"}">EN</button>
+      </div>
       <h1>${escapeHtml(title)}</h1>
       <p>${escapeHtml(body)}</p>
       ${detail ? `<pre>${escapeHtml(detail)}</pre>` : ""}
     </div>
   `;
+  attachLanguageSwitchListeners();
 };
 
 const renderCoverLetter = (letter) => {
-  const role = letter.meta?.role || "Hakemuskirje";
-  const roleLabel = letter.meta?.roleLabel || "Tehtävänimike";
-  const company = letter.meta?.company || "Yritys";
+  const copy = getCopy(currentLocale);
+  const role = letter.meta?.role || copy.defaults.role;
+  const roleLabel = letter.meta?.roleLabel || copy.defaults.roleLabel;
+  const company = letter.meta?.company || copy.defaults.company;
   const positionId = letter.meta?.positionId || "";
-  const recipientName = letter.recipient?.name || "Rekrytointitiimi";
+  const recipientName = letter.recipient?.name || copy.defaults.recipientName;
   const recipientTeam = letter.recipient?.team || "";
   const recipientCompany = letter.recipient?.company || company;
   const recipientLocation = letter.recipient?.location || "";
@@ -66,27 +112,26 @@ const renderCoverLetter = (letter) => {
   const authorTitle =
     import.meta.env.VITE_AUTHOR_TITLE ||
     letter.author?.title ||
-    "Senior Full-stack Web Developer";
+    copy.defaults.authorTitle;
   const authorLocation =
     import.meta.env.VITE_AUTHOR_LOCATION ||
     letter.author?.location ||
-    "Turku, Finland";
+    copy.defaults.authorLocation;
   const authorEmail = import.meta.env.VITE_EMAIL || letter.author?.email || "";
   const authorPhone =
     import.meta.env.VITE_PHONE_NUMBER || letter.author?.phone || "";
 
-  // Finnish date format: dd.mm.yyyy
-  const formatFinnishDate = (isoDate) => {
+  const formatDate = (isoDate) => {
     const date = isoDate ? new Date(isoDate) : new Date();
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}.${month}.${year}`;
+    return new Intl.DateTimeFormat(copy.dateLocale, {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    }).format(date);
   };
 
-  const createdAt =
-    letter.meta?.createdAt || new Date().toISOString().slice(0, 10);
-  const displayDate = formatFinnishDate(createdAt);
+  const createdAt = new Date().toISOString().slice(0, 10);
+  const displayDate = formatDate(createdAt);
 
   const body = Array.isArray(letter.body) ? letter.body : [];
   const highlights = Array.isArray(letter.highlights) ? letter.highlights : [];
@@ -99,51 +144,38 @@ const renderCoverLetter = (letter) => {
     .map((point) => `<li>${escapeHtml(point)}</li>`)
     .join("");
 
-
   document.querySelector("#app").innerHTML = `
     <div class="cover-letter-page">
-      <aside class="cover-letter-aside">
-        <div class="contact-section">
-          <h3>Yhteystiedot</h3>
-          ${authorPhone ? `<div class="contact-item"><i class="fa-solid fa-phone"></i> <span>${escapeHtml(authorPhone)}</span></div>` : ""}
-          ${authorEmail ? `<div class="contact-item"><i class="fa-solid fa-envelope"></i> <span>${escapeHtml(authorEmail)}</span></div>` : ""}
-          ${authorLocation ? `<div class="contact-item"><i class="fa-solid fa-location-dot"></i> <span>${escapeHtml(authorLocation)}</span></div>` : ""}
-        </div>
-
-        <div class="recipient-section">
-          <h3>Vastaanottaja</h3>
-          <div class="recipient-details">
-            ${recipientName ? `<p>${escapeHtml(recipientName)}</p>` : ""}
-            ${recipientTeam ? `<p>${escapeHtml(recipientTeam)}</p>` : ""}
-            ${recipientCompany ? `<p>${escapeHtml(recipientCompany)}</p>` : ""}
-            ${recipientLocation ? `<p>${escapeHtml(recipientLocation)}</p>` : ""}
-          </div>
-        </div>
-
-        <div class="date-section">
-          <h3>Päivämäärä</h3>
-          <time dateTime="${escapeHtml(createdAt)}">${escapeHtml(displayDate)}</time>
-        </div>
-      </aside>
-
       <main class="cover-letter-main">
-        <header class="main-header">
-          <h1>${escapeHtml(authorName)}</h1>
-          <h2>${escapeHtml(authorTitle)}</h2>
-        </header>
+        <header>
+          <div>
+            <h1>${escapeHtml(authorName)}</h1>
+            <h2>${escapeHtml(authorTitle)}</h2>
+          </div>
 
-        <div class="letter-header">
-          ${roleLabel ? `<p class="role-label">${escapeHtml(roleLabel)}</p>` : ""}
-          <h3>${escapeHtml(role)}${positionId ? ` <small class="position-id">(${escapeHtml(positionId)})</small>` : ""}</h3>
-          <p class="company">${escapeHtml(company)}</p>
-        </div>
+          <div class="contact-section">
+            ${authorPhone ? `<span>${escapeHtml(authorPhone)}</span>` : ""}
+            ${authorEmail ? `<span>${escapeHtml(authorEmail)}</span>` : ""}
+            ${authorLocation ? `<span>${escapeHtml(authorLocation)}</span>` : ""}
+          </div>
+
+          <div class="date-section">
+            <time dateTime="${escapeHtml(createdAt)}">${escapeHtml(displayDate)}</time>
+          </div>
+
+          <div class="actions language-switch" role="group" aria-label="${copy.header.toggleLabel}">
+            <span class="language-switch-label">${copy.header.toggleLabel}</span>
+            <button type="button" class="language-btn ${currentLocale === "fi" ? "is-active" : ""}" data-lang="fi" aria-pressed="${currentLocale === "fi"}">FI</button>
+            <button type="button" class="language-btn ${currentLocale === "en" ? "is-active" : ""}" data-lang="en" aria-pressed="${currentLocale === "en"}">EN</button>
+          </div>
+        </header>
 
         <div class="letter-body">
           <section class="letter-section">
             ${letter.greeting ? `<p class="greeting">${escapeHtml(letter.greeting)}</p>` : ""}
             ${letter.opening ? `<p class="opening">${escapeHtml(letter.opening)}</p>` : ""}
           </section>
-          
+
           <section class="letter-section">
             ${bodyMarkup}
           </section>
@@ -152,7 +184,7 @@ const renderCoverLetter = (letter) => {
             highlights.length
               ? `
           <section class="letter-section highlights-section">
-            <h4>Miksi sopisin rooliin</h4>
+            <h4>${copy.highlightsTitle}</h4>
             <ul>${highlightsMarkup}</ul>
           </section>`
               : ""
@@ -169,17 +201,36 @@ const renderCoverLetter = (letter) => {
       </main>
     </div>
   `;
+  attachLanguageSwitchListeners();
+};
+
+const attachLanguageSwitchListeners = () => {
+  document.querySelectorAll(".language-btn").forEach((button) => {
+    button.addEventListener("click", () => {
+      const nextLocale = button.dataset.lang;
+      if (nextLocale && nextLocale !== currentLocale && isSupportedLocale(nextLocale)) {
+        currentLocale = nextLocale;
+        persistLocale(nextLocale);
+        if (currentLetter) {
+          renderCoverLetter(currentLetter);
+        } else {
+          run();
+        }
+      }
+    });
+  });
 };
 
 const run = async () => {
   stopAutoRefresh();
   const slug = slugFromHash();
+  const copy = getCopy(currentLocale);
 
   if (!slug) {
     renderMessage(
-      "Yksityiset hakemuskirjeet",
-      "Anna slug URL-ankkurissa avataksesi tietyn luonnoksen.",
-      "Esimerkki: /cover-letter.html#/l/abc123xyz",
+      copy.noSlugTitle,
+      copy.noSlugBody,
+      copy.noSlugDetail,
     );
     return;
   }
@@ -195,9 +246,9 @@ const run = async () => {
     if (!letterResponse.ok) {
       if (letterResponse.status === 404) {
         renderMessage(
-          "Luonnosta ei löytynyt",
-          "Tälle slugille ei ole paikallista luonnosta.",
-          `Tiedosto: letters.local/${fileName}`,
+          copy.notFoundTitle,
+          copy.notFoundBody,
+          `${copy.notFoundDetailPrefix}${fileName}`,
         );
       } else {
         throw new Error(
@@ -208,6 +259,7 @@ const run = async () => {
     }
 
     const letter = await letterResponse.json();
+    currentLetter = letter;
     renderCoverLetter(letter);
 
     if (import.meta.env.DEV) {
@@ -228,6 +280,7 @@ const run = async () => {
 
           if (nextFingerprint !== lastFingerprint) {
             lastFingerprint = nextFingerprint;
+            currentLetter = liveLetter;
             renderCoverLetter(liveLetter);
           }
         } catch {
@@ -237,12 +290,15 @@ const run = async () => {
     }
   } catch (error) {
     renderMessage(
-      "Luonnoksen lataus epäonnistui",
-      "Määritettyä luonnostiedostoa ei voitu ladata.",
+      copy.loadErrorTitle,
+      copy.loadErrorBody,
       String(error),
     );
   }
 };
 
 run();
-window.addEventListener("hashchange", run);
+window.addEventListener("hashchange", () => {
+  currentLetter = null;
+  run();
+});

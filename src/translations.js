@@ -2,6 +2,71 @@ export const DEFAULT_LOCALE = "fi";
 
 export const SUPPORTED_LOCALES = ["fi", "en"];
 
+export const coverLetterTranslations = {
+  fi: {
+    locale: "fi_FI",
+    dateLocale: "fi-FI",
+    header: {
+      toggleLabel: "Kieli",
+    },
+    a11y: {
+      languageChanged: "Kieli vaihdettu: {language}",
+      languageNames: {
+        fi: "Suomi",
+        en: "Englanti",
+      },
+    },
+    highlightsTitle: "Miksi sopisin rooliin",
+    noSlugTitle: "Yksityiset hakemuskirjeet",
+    noSlugBody: "Anna slug URL-ankkurissa avataksesi tietyn luonnoksen.",
+    noSlugDetail: "Esimerkki: /cover-letter.html#/l/abc123xyz",
+    notFoundTitle: "Luonnosta ei löytynyt",
+    notFoundBody: "Tälle slugille ei ole paikallista luonnosta.",
+    notFoundDetailPrefix: "Tiedosto: letters.local/",
+    loadErrorTitle: "Luonnoksen lataus epäonnistui",
+    loadErrorBody: "Määritettyä luonnostiedostoa ei voitu ladata.",
+    defaults: {
+      role: "Hakemuskirje",
+      roleLabel: "Tehtävänimike",
+      company: "Yritys",
+      recipientName: "Rekrytointitiimi",
+      authorTitle: "Senior Full-stack Web Developer",
+      authorLocation: "Turku, Suomi",
+    },
+  },
+  en: {
+    locale: "en_US",
+    dateLocale: "en-US",
+    header: {
+      toggleLabel: "Language",
+    },
+    a11y: {
+      languageChanged: "Language changed to {language}",
+      languageNames: {
+        fi: "Finnish",
+        en: "English",
+      },
+    },
+    highlightsTitle: "Why I'm a great fit",
+    noSlugTitle: "Private Cover Letters",
+    noSlugBody: "Provide a slug in the URL anchor to open a specific draft.",
+    noSlugDetail: "Example: /cover-letter.html#/l/abc123xyz",
+    notFoundTitle: "Draft not found",
+    notFoundBody: "No local draft exists for this slug.",
+    notFoundDetailPrefix: "File: letters.local/",
+    loadErrorTitle: "Failed to load draft",
+    loadErrorBody: "The specified draft file could not be loaded.",
+    defaults: {
+      role: "Cover Letter",
+      roleLabel: "Position",
+      company: "Company",
+      recipientName: "Recruitment Team",
+      authorTitle: "Senior Full-stack Web Developer",
+      authorLocation: "Turku, Finland",
+    },
+  },
+};
+
 export const resumeTranslations = {
   fi: {
     locale: "fi_FI",

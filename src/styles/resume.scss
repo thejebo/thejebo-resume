@@ -638,17 +638,6 @@ body[data-page="print"] #app aside .sets {
     display: grid;
     gap: 2px;
     font-size: 12px;
-
-    // Only style the printed email/phone links (leave all other links alone)
-    a.print-contact-link {
-      color: #1a73e8;
-      text-decoration: underline;
-      display: inline-block;
-
-      &:visited {
-        color: #1a73e8;
-      }
-    }
   }
 
   .references-empty {
@@ -781,6 +770,10 @@ body[data-page="print"] #app aside .sets {
 
       section {
         padding: 0 0 4px 0;
+
+        &:first-of-type {
+          margin-bottom: 15px;
+        }
 
         &.education {
           padding-left: 0;

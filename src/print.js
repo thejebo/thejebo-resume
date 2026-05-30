@@ -33,41 +33,6 @@ const formatFinnishPhone = (phone) => {
   return `+358 ${sub.slice(0, 1)} ${sub.slice(1)}`;
 };
 
-const toMailtoHref = (email) => {
-  const raw = String(email || "").trim();
-  if (!raw) return "";
-  const safe = raw.replace(/[^a-zA-Z0-9@._+-]/g, "");
-  return safe ? `mailto:${safe}` : "";
-};
-
-const toTelHref = (phone) => {
-  const raw = String(phone || "").trim();
-  if (!raw) return "";
-
-  const normalized = raw.startsWith("+")
-    ? `+${raw.slice(1).replace(/[^\d]/g, "")}`
-    : raw.replace(/[^\d]/g, "");
-
-  return normalized ? `tel:${normalized}` : "";
-};
-
-const renderEmailLink = (email) => {
-  const label = escapeHtml(email);
-  const href = toMailtoHref(email);
-  return href
-    ? `<a class="print-contact-link" href="${escapeHtml(href)}">${label}</a>`
-    : `<span>${label}</span>`;
-};
-
-const renderPhoneLink = (phone) => {
-  const display = formatFinnishPhone(phone);
-  const label = escapeHtml(display);
-  const href = toTelHref(phone);
-  return href
-    ? `<a class="print-contact-link" href="${escapeHtml(href)}">${label}</a>`
-    : `<span>${label}</span>`;
-};
-
 const getInitialLocale = () => {
   try {
     const storedLocale = localStorage.getItem(LANGUAGE_STORAGE_KEY);
@@ -124,8 +89,8 @@ const renderReferrersSection = (referrers, locale) => {
         <div class="referrer-name">${escapeHtml(ref.name)}</div>
         <div class="referrer-title">${escapeHtml(ref.title)}</div>
         <div class="referrer-contact">
-          ${renderEmailLink(ref.email)}
-          ${renderPhoneLink(ref.phone)}
+          <span>${escapeHtml(ref.email)}</span>
+          <span>${escapeHtml(ref.phone)}</span>
         </div>
       </div>
     `,
