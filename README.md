@@ -15,3 +15,8 @@ I'm Jere Borgelin, a passionate Senior Full-stack Web Developer specializing in 
 - The selected language is saved to localStorage and restored on next visit.
 
 Feel free to explore and contact me for collaboration or opportunities!
+
+## Development Notes
+
+- Runtime source modules in this repository use TypeScript (`.ts`) under `src/` and `tools/`.
+- Run `npm run lint` to validate the codebase and `npm run lint:fix` to apply ESLint autofixes where safe.

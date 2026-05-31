@@ -10,10 +10,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "deploy": "vite build && gh-pages -d dist",
-    "jobs:profile": "tsx tools/jobs/profile.ts",
-    "jobs:select": "tsx tools/jobs/select.ts",
-    "jobs:prepare": "tsx tools/jobs/prepare.ts"
+    "deploy": "vite build && gh-pages -d dist"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
