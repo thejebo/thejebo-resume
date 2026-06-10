@@ -191,7 +191,7 @@ export const resumeTranslations = {
         title: "Työkalut",
         items: [
           "VS Code, Visual Studio",
-          "GitHub Copilot, ChatGPT, CodeRabbit",
+          "Claude, Codex, GitHub Copilot, ChatGPT, CodeRabbit",
           "GitHub Actions, Dependabot",
           "Jira, Trello",
           "Confluence",
@@ -338,7 +338,7 @@ export const resumeTranslations = {
         title: "Tools",
         items: [
           "VS Code, Visual Studio",
-          "GitHub Copilot, ChatGPT, CodeRabbit",
+          "Claude, Codex, GitHub Copilot, ChatGPT, CodeRabbit",
           "GitHub Actions, Dependabot",
           "Jira, Trello",
           "Confluence",
