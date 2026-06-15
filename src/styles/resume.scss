@@ -853,11 +853,11 @@ body[data-page="print"] #app aside .sets {
       display: table-cell;
       color: $print-sidebar-text;
       background-color: $print-sidebar-bg;
-      padding: 20px ($print-content-inset) 20px 30px;
+      padding: 20px $print-content-inset 0 30px;
 
       h3 {
         text-align: center;
-        padding: 54px 0 12px 0;
+        padding: 52px 0 22px 0;
       }
 
       .sets h4 {
@@ -878,7 +878,7 @@ body[data-page="print"] #app aside .sets {
         color: $print-sidebar-list-color;
         margin-top: 4px;
         padding-right: 0;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
         list-style-type: none;
       }
 
