@@ -13,12 +13,12 @@ $black: #000000;
 // true  = match live website colors in PDF (recommended with Background graphics ON)
 // false = flatter, high-contrast print-safe palette
 $print-match-live: true;
-$print-subtitle-text: if($print-match-live, $white, $dark-grey);
-$print-subtitle-bg: if($print-match-live, $primary, transparent);
-$print-sidebar-text: if($print-match-live, $white, $dark-grey);
-$print-sidebar-bg: if($print-match-live, $dark-grey, transparent);
-$print-sidebar-list-color: if($print-match-live, $darker-white, $grey);
-$print-sidebar-heading-color: if($print-match-live, $white, $dark-grey);
+$print-subtitle-text: if(sass($print-match-live): $white; else: $dark-grey);
+$print-subtitle-bg: if(sass($print-match-live): $primary; else: transparent);
+$print-sidebar-text: if(sass($print-match-live): $white; else: $dark-grey);
+$print-sidebar-bg: if(sass($print-match-live): $dark-grey; else: transparent);
+$print-sidebar-list-color: if(sass($print-match-live): $darker-white; else: $grey);
+$print-sidebar-heading-color: if(sass($print-match-live): $white; else: $dark-grey);
 $print-page-margin: 0mm;
 $print-content-inset: 6mm;
 $print-page-height: 297mm;

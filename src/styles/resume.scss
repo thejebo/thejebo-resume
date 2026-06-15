@@ -296,7 +296,7 @@
         text-align: right;
 
         > div {
-          padding: 0 0 0 15px;
+          padding: 0 12px 0 15px;
         }
 
         h4 {
@@ -848,12 +848,12 @@ body[data-page="print"] #app aside .sets {
     }
 
     aside {
-      display: table-cell;
       width: 32%;
-      color: $print-sidebar-text;
-      padding: 80px var($print-content-inset + 30px) 20px 30px;
       text-align: right;
+      display: table-cell;
+      color: $print-sidebar-text;
       background-color: $print-sidebar-bg;
+      padding: 20px ($print-content-inset) 20px 30px;
 
       h3 {
         text-align: center;
@@ -884,8 +884,8 @@ body[data-page="print"] #app aside .sets {
 
       .contact-info {
         display: block;
-        padding: 0 22px;
         margin-top: 0;
+        padding: 0 22px;
 
         span {
           display: inline-block;
@@ -902,7 +902,7 @@ body[data-page="print"] #app aside .sets {
       .contact-section {
         margin-top: 16px;
         text-align: center;
-        padding: 20px 20px 0;
+        padding: 20px 0 0;
 
         h3 {
           font-size: 16px;
